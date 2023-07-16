@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS employee
 );
 /*給料テーブル*/ CREATE TABLE IF NOT EXISTS t_salary
 (
-   user_id VARCHAR (50),
+   user_id VARCHAR(50),
    year_month VARCHAR (50),
    salary INT,
    PRIMARY KEY
