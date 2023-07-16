@@ -47,20 +47,28 @@
 					</tr>
 					<tr>
 						<th> 性別 </th>
-						<t th:text="*{ gender == 1 ? '男性': '女性'}">
+						<td th:text="*{ gender == 1 ? '男性': '女性'}">
 							</td>
+					</tr>
+					<tr>
+						<th>部署名</th>
+						<td>
+					<span th:if="*{department != null}"
+					 th:text="*{department.departmentName}">
+					 </span>
+					 </td>
 					</tr>
 				</tbody>
 			</table>
 			<!--ボタンエリア-->
 			<div class="text-center">
 				<!--削除ボタン-->
-				<button　class="btn btn-danger" type="submit" name="delete">
+				<button class="btn btn-danger" type="submit" name="delete">
 					削除
 				</button>
 				<!--更新ボタン-->
-				<button class="btn btn primary" type="submit"
-				name="update">
+				<button class="btn btn-primary" type="submit" name="update">
+				更新
 				</button>
 					</form>
 	</div>
