@@ -59,6 +59,7 @@ public class UserDatailController {
 		}catch(Exception e) {
 			log.error("ユーザー更新でエラー",e);
 		}
+		
 		//ユーザー一覧画面にリダイレクト
 		return "redirect:/user/list";
 	}
