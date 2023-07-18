@@ -1,4 +1,4 @@
-package com.example.applicatioln.service.LogAspect;
+package com.example.applicatioln.service.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
