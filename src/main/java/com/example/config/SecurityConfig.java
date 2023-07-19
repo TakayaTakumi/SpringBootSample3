@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated();//それ以外直リンクNG
 
 		//CSRF対策を無効を無効に設定(一時的)
+		http.csrf().disable();
 
 	}
 }
