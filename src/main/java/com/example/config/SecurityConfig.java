@@ -1,5 +1,6 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -14,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -29,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/webjars/**")
 				.antMatchers("/css/**")
 				.antMatchers("/js/**")
-				.antMatchers("/h2-cnsole/**");
+				.antMatchers("/h2-console/**");
 
 	}
 
@@ -50,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginProcessingUrl("/login")//ログイン処理のパス
 				.loginPage("/login")//ログインページの指定
 				.failureUrl("/login?error")//ログイン失敗時の遷移先
-				.usernameParameter("password")//ログインページのユーザーID
+				.usernameParameter("userId")//ログインページのユーザーID
 				.passwordParameter("password")//ログインページのパスワード
 				.defaultSuccessUrl("/user/list", true);//成功後の遷移先
 
@@ -66,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		PasswordEncoder encoder = passwordEncoder();
 		
 		//インメモリ認証
+		/*
 		auth
 		.inMemoryAuthentication()
 		.withUser("user")//userを追加
@@ -75,6 +80,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.withUser("admin")//adminを追加
 		.password(encoder.encode("admin"))
 		.roles("ADMIN");
+		*/
+		
+		// ユーザー データ で 認証 
+		auth 
+		.userDetailsService(userDetailsService) 
+		.passwordEncoder(encoder);
+
 		
 	}
 }

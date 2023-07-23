@@ -12,8 +12,8 @@ user_id
 ,department_id
 ,role
 )VALUES
-('system@co.jp','password','システム管理者','2000-01-01',21,1,1,'ROLE_ADMIN')
-,('user@co.jp','password','ユーザー1','2000-01-01',21,2,2,'ROLE_GENERAL')
+('system@co.jp','$2a$10$LfINHF8oD5gEqyDTUVDYb.eWiuwS.XekWSU2oRnbG9U8tGd9n0gDq','システム管理者','2000-01-01',21,1,1,'ROLE_ADMIN')
+,('user@co.jp','$2a$10$LfINHF8oD5gEqyDTUVDYb.eWiuwS.XekWSU2oRnbG9U8tGd9n0gDq','ユーザー1','2000-01-01',21,2,2,'ROLE_GENERAL')
 ;
 
 /*部署マスタ*/
