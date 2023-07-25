@@ -6,6 +6,8 @@
 	<title> ユーザー 詳細 </title>
 	<!-- CSS 読込 -->
 	<link rel=" stylesheet" th:href="@{/css/user/list.css}">
+	<!--JS読込-->
+	<script th:src="@{/js/user/detail.js}" defer></script> 
 </head>
 
 <body>
@@ -59,6 +61,7 @@
 					</tr>
 				</tbody>
 			</table>
+			
 			<!--ボタンエリア-->
 			<div class="text-center">
 				<!--削除ボタン-->
@@ -69,7 +72,15 @@
 				<button class="btn btn-primary" type="submit" name="update">
 					更新
 				</button>
-
+				
+				<!--RESTボタンエリア-->
+				<div class="text-center mt-2">
+				<!--削除ボタン-->
+				<button id="btn-delete" class="btn btn-danger" type="button">削除(REST)</button>
+				<!--更新ボタン-->
+				<button id="btn-update" class="btn btn-primary" type="button">更新(REST)</button>
+				</div>
+				
 				<!--給料情報-->
 				<th:block th:if="*{salaryList != null and salaryList.size()>0}">
 					<div class="header border-bottom">
