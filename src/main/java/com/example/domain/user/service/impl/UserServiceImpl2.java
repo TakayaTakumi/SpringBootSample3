@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +55,13 @@ public class UserServiceImpl2 implements UserService {
 	/** ユーザー 取得 */
 	@Override
 	public List<MUser> getUsers(MUser user) {
-		return repository.findAll();
+		
+		//検索条件
+				ExampleMatcher matcher = ExampleMatcher.matching()//and条件
+						.withStringMatcher(StringMatcher.CONTAINING)//Like句
+						.withIgnoreCase();//大文字・小文字の両方
+				
+		return repository.findAll(Example.of(user,matcher));
 	}
 
 	/** ユーザー 取得( 1 件) */
@@ -68,6 +77,11 @@ public class UserServiceImpl2 implements UserService {
 	@Override
 	public void updateUserOne(String userId, String password, String userName) {
 
+		//パスワード暗号化
+		String encryptPassword = encoder.encode(password);
+
+		//ユーザー更新
+		repository.updateUser(userId, encryptPassword, userName);
 	}
 
 	/** ユーザー 削除( 1 件) */
@@ -80,8 +94,8 @@ public class UserServiceImpl2 implements UserService {
 	/** ログイン ユーザー 取得 */
 	@Override
 	public MUser getLoginUser(String userId) {
-		Optional<MUser> option = repository.findById(userId);
-		MUser user = option.orElse(null);
-		return user;
+		
+		return repository.findLoginUser(userId);
+
 	}
 }
