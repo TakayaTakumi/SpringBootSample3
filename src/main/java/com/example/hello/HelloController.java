@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
+@Controller //ユーザーによるテキストボックスへの入力やボタン押下名ｄのイベントに対するハンドラとなり、該当のモデルのメソッドを呼び出す
 public class HelloController {
 	
 	@Autowired
 	private HelloService service;
 
-	@GetMapping("/hello")
+	@GetMapping("/hello")//URLの最後(/hello)http～/helloのhttpリクエストを受け取った場合行う処理
 	public String getHello() {
 		//hello.htmlに画面遷移
-		return "hello";
+		return "hello"; //正常に動いたら"hello" hello.htmlに遷移し画面を移す
 	}
 
 	@PostMapping("/hello")

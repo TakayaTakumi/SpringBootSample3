@@ -1,16 +1,15 @@
-<!DOCTYPE html> //概要ブラウザーがどんな言語でかかれているのか理解するために必要,webページ作成の際に真っ先に宣言する必要あり、その宣言内容に沿って文章を表示する
-<html xmlns:th="http://www.thymeleaf.org">
-<meta>
-<meta charset="UTF-8">
+<!DOCTYPE html> <!--概要ブラウザーがどんな言語でかかれているのか理解するために必要,webページ作成の際に真っ先に宣言する必要あり、その宣言内容に沿って文章を表示する-->
+<html xmlns:th="http://www.thymeleaf.org"><!--html内にxmlns:th="http://www.thymeleaf.org"を記載することによりthymeleafが使えるようになる-->
+<head><!--ヘッダ部分を指定するタグ、headタグに囲まれた内容はhtmlの情報を宣言するもの-->
+<meta charset="UTF-8"><!--metaとはメタ情報のこと　文字コードを指定する必要があるのはHTMLファイルの文字コードとブラウザが認識したコードが異なるためにおこる-->
 </meta>
-<title>Hello World</title>
+<title>Hello World</title><!--titleタグに囲まれている内容はwebブラウザの上部のタイトルバーや検索結果のタイトル、ブックマークに入れた時のタイトルとしても表示される-->
 </head>
 
-<body>
-	<h1>Hello World</h1>
+<body><!--文章や画像など、実際にブラウザの画面上に表示される内容を指定する-->
+	<h1>Hello World</h1><!--HとはHeadingの略で見出しを意味している h1～h6とタグ内の文字が大きくなるにつれて見出しの文字は小さくなる-->
 
-	<form method="post" action="/hello">
-
+	<form method="post" action="/hello"><!--入力・送信フォームを作成する際に使用する要素 methodはサーバーにデータを送る形式(GET・POST)で指定　actionは実行された時の動作を指定(URLを追加)-->
 		入力: <input type="text" name="text1" />
 
 		<input type="submit" value="クリック" />

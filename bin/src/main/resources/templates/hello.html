@@ -1,0 +1,30 @@
+<!DOCTYPE html> //概要ブラウザーがどんな言語でかかれているのか理解するために必要,webページ作成の際に真っ先に宣言する必要あり、その宣言内容に沿って文章を表示する
+<html xmlns:th="http://www.thymeleaf.org">
+<meta>
+<meta charset="UTF-8">
+</meta>
+<title>Hello World</title>
+</head>
+
+<body>
+	<h1>Hello World</h1>
+
+	<form method="post" action="/hello">
+
+		入力: <input type="text" name="text1" />
+
+		<input type="submit" value="クリック" />
+	</form>
+	</br>
+	
+	<form method="post" action = "/hello/db">
+		
+		従業員:<input type="text" name="text2" th:value="${text2_value}"/>
+		
+		<input type = "submit" value ="クリック"/>
+		 
+	</form>
+	
+</body>
+
+</html>
