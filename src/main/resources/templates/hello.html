@@ -10,13 +10,13 @@
 	<h1>Hello World</h1><!--HとはHeadingの略で見出しを意味している h1～h6とタグ内の文字が大きくなるにつれて見出しの文字は小さくなる-->
 
 	<form method="post" action="/hello"><!--入力・送信フォームを作成する際に使用する要素 methodはサーバーにデータを送る形式(GET・POST)で指定　actionは実行された時の動作を指定(URLを追加)-->
-		入力: <input type="text" name="text1" />
+		入力: <input type="text" name="text1" /><!--htmlの要素で、ユーザーからデータを送信ためのフォーム　type属性は部品の形式を表す(text・radioなど)　nameとは部品の名前を表す入力フォーム欄に固定の文字を出力する-->
 
-		<input type="submit" value="クリック" />
+		<input type="submit" value="クリック" /><!--htmlのユーザーのデータをサーバーに送信する　type=submitはフォームを送信するボタンを作成する value=クリックではボタン内にボタン名（クリック）を表している-->
 	</form>
 	</br>
 	
-	<form method="post" action = "/hello/db">
+	<form method="post" action = "/hello/db"><!--formタグの中にinput・selectなどを追加する　method（サーバーに送る形式を指定する） action(実行された時の動作を指定する)-->
 		
 		従業員:<input type="text" name="text2" th:value="${text2_value}"/>
 		
