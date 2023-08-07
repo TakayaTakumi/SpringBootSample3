@@ -12,16 +12,16 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script th:src="@{/js/user/signup.js}" defer></script>
-	<title th:text="#{user.signup.title}"></title>
+	<title th:text="#{user.signup.title}"></title><!--タブやお気に入りの表示内容がmessages.propertiesのuser.signup.titleに格納されている値と同じ-->
 </head>
 
 <body class="bg-light">
 	<form id="signup-form" method="post" action="/user/signup" class="form-signup" th:object="${signupForm}">
-		<h1 class="text-center" th:text="#{user.signup.title}"></h1>
+		<h1 class="text-center" th:text="#{user.signup.title}"></h1><!--class=text-centerでbody内で表示があるものが中央ぞろえになる-->
 		<!--ユーザーID-->
 		<div class="form-group">
-			<label for="userId" th:text="#{userId}"></label>
-			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/>
+			<label for="userId" th:text="#{userId}"></label><!--type=text内での表示をしている-->
+			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/><!--fieldは1行しか入力できない入力欄-->
 			<div class="invalid-feedback" th:errors="*{userId}">
 				
 			</div>

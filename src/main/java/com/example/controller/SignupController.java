@@ -26,14 +26,16 @@ import com.example.form.SignupForm;
 import lombok.extern.slf4j.Slf4j;
 
 
-
+/*@Componentアノテーションを付けたクラスはコンポーネントして扱われる
+ * すなわち,DIコンテナーによってインスタンス化され、シングルトンインスタンスとして管理*/
+/*@RequestMappingとは[http://ドメイン/user/○○○]　主にクラスとクラスパスを紐づける役割を担います*/
 @Controller
 @RequestMapping("/user")
 @Slf4j
 public class SignupController {
 
 	
-	
+	/*@Autowiredを書くことによりnewを使った記述をしてクラスを呼ばなくてもすむ*/
 	@Autowired
 	private UserApplicationService userApplicationService;
 	
@@ -48,16 +50,19 @@ public class SignupController {
 	/*ユーザー登録画面を表示**/
 	@GetMapping("/signup")
 	public String getSignup(Model model,Locale locale,@ModelAttribute SignupForm form) {
+		
+		/*genderMapに変数userApplicationServiceに格納されているgetGenderMap()を読込*/
 		//性別を取得
 		Map<String,Integer> genderMap = userApplicationService.getGenderMap(locale);
-		model.addAttribute("genderMap",genderMap);
+		model.addAttribute("genderMap",genderMap);//modelにgenderMapを登録している
 		
 		
 		//ユーザー登録画面に遷移
 		return "user/signup";
 	}
 	
-	
+	/*メソッドとPOSTの処理を行うURLを紐づける役割　
+	 * POSTはDBにデータを登録するためのアノテーション*/
 	/**ユーザー登録処理*/
 	@PostMapping("/signup")
 	public String postSignup(Model model, Locale locale,@ModelAttribute @Validated(GroupOrder.class) SignupForm form,BindingResult bindingResult) {

@@ -20,15 +20,17 @@ public class HelloController {
 	}
 
 	/*@PostMappingはメソッドとPOSTの処理を行うURLを行うURLを紐付ける役割 
-	 *POSTはデータの登録、会員登録フォームから情報を入力してDBに登録する
-	*/
+	 *POSTはデータの登録、会員登録フォームから情報を入力してDBに登録する*/
 	@PostMapping("/hello")
 	public String postRequest(@RequestParam("text1") String str,
 			Model model) { /*@RequestParam(text1)でhello.htmlのname=text1と一致するようにする
 							*と結びつき入力された値が@RequestParamに渡され変数strに格納される
-							//画面から受け取った文字列をModelに登録								     ModelクラスはControllerからView（画面）へ変数を渡すためのもの*/
-		model.addAttribute("sample", str);/*@RequestParam(text1)に渡された値をstrに渡し
-											キー名のsampleが呼ばれるとstrに格納されている値が出力される*/
+							 ModelクラスはControllerからView（画面）へ変数を渡すためのもの*/
+
+		//画面から受け取った文字列をModelに登録	
+		/*@RequestParam(text1)に渡された値をstrに渡し
+		キー名のsampleが呼ばれるとstrに格納されている値が出力される*/
+		model.addAttribute("sample", str);
 		//response.htmに画面遷移
 		return "hello/response";
 	}
