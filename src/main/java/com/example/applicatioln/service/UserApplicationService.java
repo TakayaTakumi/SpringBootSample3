@@ -25,6 +25,7 @@ public class UserApplicationService {
 		 * 特にLinkedHashMapは要素を追加した順番に出力されます。*/
 		Map<String, Integer> genderMap = new LinkedHashMap<>();
 		
+		/*maleにmessageSource(messages.properties)からgetMessageをしキー名(male)とlocale(国や地域)を指定し格納する(femaleも)*/
 		String male = messageSource.getMessage("male", null, locale);
 		String female = messageSource.getMessage("female", null, locale);
 
