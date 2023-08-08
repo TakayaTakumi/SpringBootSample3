@@ -16,12 +16,12 @@
 </head>
 
 <body class="bg-light">
-	<form id="signup-form" method="post" action="/user/signup" class="form-signup" th:object="${signupForm}">
+	<form id="signup-form" method="post" action="/user/signup" class="form-signup" th:object="${signupForm}"><!--th:objectが書かれたタグ内であればModelに登録されたキー名を省略できる-->
 		<h1 class="text-center" th:text="#{user.signup.title}"></h1><!--class=text-centerでbody内で表示があるものが中央ぞろえになる-->
 		<!--ユーザーID-->
 		<div class="form-group">
 			<label for="userId" th:text="#{userId}"></label><!--type=text内での表示をしている-->
-			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/><!--fieldは1行しか入力できない入力欄-->
+			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/><!--th:fieldはJavaクラスと画面入力内容をバインドする-->
 			<div class="invalid-feedback" th:errors="*{userId}">
 				
 			</div>
