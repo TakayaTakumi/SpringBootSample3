@@ -66,7 +66,9 @@ public class SignupController {
 	
 	/*メソッドとPOSTの処理を行うURLを紐づける役割　
 	 * POSTはDBにデータを登録するためのアノテーション
-	 * @Validatedを追加することで登録画面で入力ミスが起きた時にエラー内容が表示される　バリデーションの結果はBindingResultに格納される*/
+	 * @Validatedを追加することで登録画面で入力ミスが起きた時にエラー内容が表示される　
+	 * バリデーションの結果はBindingResultに格納される
+	 * @Validated内に(GroupOrder.class)を追加することによりGroupOrder.javaのバリデーションの順番を反映できる*/
 	/**ユーザー登録処理*/
 	@PostMapping("/signup")
 	public String postSignup(Model model, Locale locale,@ModelAttribute @Validated(GroupOrder.class) SignupForm form,BindingResult bindingResult) {

@@ -17,8 +17,9 @@ import lombok.Data;
 @Data
 public class SignupForm {
 	
-/*@NotBlank 文字列がnull、空文字、空白、スペースのみでないことをチェックする
- *@Email 文字列がメールアドレス形式かどうかチェックする*/	
+/*@NotBlank 文字列がnull、空文字、空白、スペースのみでないことをチェックする　groups = ValidGroup1.classで初めにエラーがあるか
+ *@Email 文字列がメールアドレス形式かどうかチェックする　　　　　　　　　　　 次にgroups = ValidGroup2.classでエラーがあるか確認する
+ *																			　両方にエラーがあった場合2のほうでエラー表記をする*/	
 @NotBlank(groups = ValidGroup1.class)
 @Email(groups = ValidGroup2.class)
 private String userId;
@@ -42,7 +43,8 @@ private String userName;
 private Date birthday;
 
 /*@Min 規定した値以上であるかチェックする
- *@Max 規定した値以下であるかチェックする*/
+ *@Max 規定した値以下であるかチェックする
+ *value　@Max、Min属性で検証を行う際の最大許容値を指定するmin=20は20以上であることが期待される max=100の場合は100以下であることが期待される*/
 @Min(value = 20,groups = ValidGroup2.class)
 @Max(value = 100,groups = ValidGroup2.class)
 private Integer age;
