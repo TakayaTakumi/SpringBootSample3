@@ -32,7 +32,8 @@ private String password;
 @NotBlank(groups = ValidGroup1.class)
 private String userName;
 
-
+/*日付情報をyyyy/mm/ddなどの指定したフォーマットに変換して表示するための補助クラスです。
+ * LocalDateTimeクラスで日付時刻情報を取得し、DateTimeFormatterを使って画面に日付情報を表示する方式が一般的です。*/
 @DateTimeFormat(pattern = "yyyy/MM/dd")
 @NotNull(groups = ValidGroup1.class)
 private Date birthday;
