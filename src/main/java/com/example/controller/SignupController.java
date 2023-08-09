@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 /*@Componentアノテーションを付けたクラスはコンポーネントして扱われる
  * すなわち,DIコンテナーによってインスタンス化され、シングルトンインスタンスとして管理*/
 /*@RequestMappingとは[http://ドメイン/user/○○○]　主にクラスとクラスパスを紐づける役割を担います*/
-/**/
+/*@Slf4j ログを出力するアノテーション*/
 @Controller
 @RequestMapping("/user")
 @Slf4j
@@ -65,17 +65,20 @@ public class SignupController {
 	}
 	
 	/*メソッドとPOSTの処理を行うURLを紐づける役割　
-	 * POSTはDBにデータを登録するためのアノテーション*/
+	 * POSTはDBにデータを登録するためのアノテーション
+	 * @Validatedを追加することで登録画面で入力ミスが起きた時にエラー内容が表示される　バリデーションの結果はBindingResultに格納される*/
 	/**ユーザー登録処理*/
 	@PostMapping("/signup")
 	public String postSignup(Model model, Locale locale,@ModelAttribute @Validated(GroupOrder.class) SignupForm form,BindingResult bindingResult) {
+		
 		/*BindingResultメソッドではバインドエラーやバリデーションエラーが発生
 		 * hasErrors()の結果がtrueだった場合上記エラーが発生している*/
-		//入力チェック結果
+		//入力チェック結果　バリデーションエラーの場合
 		if(bindingResult.hasErrors()) {
 			//NG:ユーザー登録画面に戻ります
 			return getSignup(model,locale,form);
 		}
+		
 		/*Signupformで入力する値がlogで表示される　
 		 *form.toString()は@ModelAttribute SignupForm formのformを書く*/
 		log.info(form.toString());

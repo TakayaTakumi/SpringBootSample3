@@ -22,7 +22,7 @@
 		<div class="form-group">
 			<label for="userId" th:text="#{userId}"></label><!--type=text内での表示をしている-->
 			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid"/><!--th:fieldはJavaクラスと画面入力内容をバインドする-->
-			<div class="invalid-feedback" th:errors="*{userId}">
+			<div class="invalid-feedback" th:errors="*{userId}"><!--th:errorsタグは同じタグ内にth:fieldを使っていると有効になる　userIdに関連つけられたエラーメッセージを出力する-->
 				
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 				<input type="radio" class="form-check-input"  th:value="${item.value}" th:field="*{gender}" th:errorclass="is-invalid"/>
 				<label class="form-check-label" th:text="${item.key}" ></label>
 			</div>
-			<div class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+			<div class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div><!--th:ifを使うことにより${#fields.hasErrors(’フィールド名')}を書くことでフィールドでエラーが発生しているのかチェックできる-->
 		</div>
 		<!--登録ボタン-->
 		<input type="submit" th:value="#{user.signup.btn}" class="btn btn-primary w-100 my-3" />
