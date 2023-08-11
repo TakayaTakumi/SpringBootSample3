@@ -15,6 +15,9 @@ import com.example.domain.user.model.MUser;
 import com.example.domain.user.service.UserService;
 import com.example.form.UserListForm;
 
+
+/*@Controller　フロント(外部)とビジネスロジックを繋げる場所
+ *@RequestMapping 全体の処理（テーマパーク）の入り口 サイト全体の入り口部分*/
 @Controller
 @RequestMapping("/user")
 public class UserListController {
@@ -26,6 +29,7 @@ public class UserListController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	/*@GetMapping GETというのは文字通り「取得」の役割をはたす部分です。登録されているデータを取って来たりします。*/
 	/**ユーザー一覧画面*/
 	@GetMapping("/list")
 	public String getUserList(@ModelAttribute UserListForm form,Model model){

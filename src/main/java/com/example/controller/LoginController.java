@@ -18,7 +18,7 @@ public class LoginController {
 		return "login/login";
 	}
 	
-	
+	/*@PostMapping 新しいデータを登録する役割を果たす。*/
 	/**ユーザー一覧画面にリダイレクト*/
 	@PostMapping("/login")
 	public String postLogin() {
