@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- xmlのバージョンとエンコーディング宣言をしている--> 
+<?xml version="1.0" encoding="UTF-8"?><!-- xmlのバージョンとエンコーディング宣言をしている --> 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.UserMapper">
- <!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
+	<!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
 	<!-- マッピング定義（ユーザー） -->
-	<resultMap type="com.example.domain.user.model.MUser" id="user">
-	
+	<resultMap type="com.example.domain.user.model.MUser"
+		id="user">
+
 		<id column="user_id" property="userId" />
 		<result column="password" property="password" />
 		<result column="user_name" property="userName" />
@@ -40,7 +41,7 @@
 
 	<!-- ユーザー1件登録 -->
 	<insert id="insertOne"><!-- UserMapper.javaのユーザー登録のinsertOneとinsert id="insertOne"を一致させる 
-	このタグの中にSQLのINSERT INTO文が記述され、Javaメソッドから呼び出されるときに実行されます。-->
+			このタグの中にSQLのINSERT INTO文が記述され、Javaメソッドから呼び出されるときに実行されます。 -->
 		insert into m_user(
 		user_id
 		,password
@@ -53,7 +54,8 @@
 		)
 		values(
 		#{userId}<!-- ・マッパーインターフェースから受け取る引数をSQL中で使用する場合、#{メソッド引数名}のように記載します。 -->
-		,#{password}<!-- メソッド引数をMUserクラスにしている -->>
+		,#{password}<!-- メソッド引数をMUserクラスにしている -->
+		>
 		,#{userName}
 		,#{birthday}
 		,#{age}
@@ -63,10 +65,11 @@
 		)
 	</insert>
 
-
+	<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、
+	idのfindManyを使うことで対応するクエリを参照できる-->
 	<!-- ユーザー複数件取得 -->
 	<select id="findMany" resultType="MUser">
-
+<!-- 下記の分でsqlからm_userを取得するための文を記載している　 -->
 		select
 
 		*
@@ -154,7 +157,7 @@
 		from
 
 		m_user
-		
+
 		where
 
 		user_id = #{userId}

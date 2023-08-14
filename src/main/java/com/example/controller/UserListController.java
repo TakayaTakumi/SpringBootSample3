@@ -22,10 +22,10 @@ import com.example.form.UserListForm;
 @RequestMapping("/user")
 public class UserListController {
 
-	
+	/*UserService.javaから*/
 	@Autowired
 	private UserService userService;
-	
+	/*javaConfig.javaから*/
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -36,10 +36,10 @@ public class UserListController {
 		
 		//formをMUserクラスに変換
 		MUser user = modelMapper.map(form, MUser.class);
-		
+		/*UserService.javaからユーザーの一覧を取得している*/
 		//ユーザー検索
 		List<MUser>userList = userService.getUsers(user);
-		
+		/*List<MUser>userListを("キー名",変数)で登録している　引数にModel modelを登録して言うr*/
 		//Modelに登録
 		model.addAttribute("userList",userList);
 		

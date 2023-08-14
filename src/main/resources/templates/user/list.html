@@ -48,12 +48,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="item:${userList}">
+					<tr th:each="item:${userList}"><!--UserListController.javaでModelに登録したUserlistを引きだし
+													下記${item.～}に繰り返し処理で登録している-->
 						<td th:text="${item.userId}"></td>
 						<td th:text="${item.userName}"></td>
 						<td th:text="${#dates.format(item.birthday,'YYYY/MM/dd')}"></td>
 						<td th:text="${item.age}"></td>
-						<td th:text="${item.gender==1}?'男性':'女性'"></td>
+						<td th:text="${item.gender==1}?'男性':'女性'"></td><!--男性が1でそれ以外では女性を表示している-->
 						<td>
 							<a class="btn btn-primary" th:href="@{'/user/detail/'+${item.userId}}">詳細</a>
 						</td>

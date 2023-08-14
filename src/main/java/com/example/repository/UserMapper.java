@@ -20,7 +20,7 @@ public interface UserMapper{
 	/**ユーザー登録*/
 	public int insertOne(MUser user);
 	
-	
+	/*public List<MUser> findMany();　select文の実行結果が複数になる場合はメソッドの戻り値をListにする*/
 	/**ユーザー取得*/
 	public List<MUser> findMany(MUser user);
 	

@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
 		mapper.insertOne(user);
 	}
 
+	/*UserService.javaから持ってきている
+	 * UserMapper.xmlからid=findMany()と結びつけることによりデータベースに格納されている値を持ってくる*/
 	/**ユーザー取得*/
 	@Override
 	public List<MUser> getUsers(MUser user) {
