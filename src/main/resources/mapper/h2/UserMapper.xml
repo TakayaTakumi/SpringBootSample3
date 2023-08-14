@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?><!-- xmlのバージョンとエンコーディング宣言をしている--> 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.UserMapper">
-
-
+ <!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
 	<!-- マッピング定義（ユーザー） -->
-	<resultMap type="com.example.domain.user.model.MUser"
-		id="user">
+	<resultMap type="com.example.domain.user.model.MUser" id="user">
+	
 		<id column="user_id" property="userId" />
 		<result column="password" property="password" />
 		<result column="user_name" property="userName" />
@@ -40,7 +39,8 @@
 	</resultMap>
 
 	<!-- ユーザー1件登録 -->
-	<insert id="insertOne">
+	<insert id="insertOne"><!-- UserMapper.javaのユーザー登録のinsertOneとinsert id="insertOne"を一致させる 
+	このタグの中にSQLのINSERT INTO文が記述され、Javaメソッドから呼び出されるときに実行されます。-->
 		insert into m_user(
 		user_id
 		,password
@@ -52,8 +52,8 @@
 		,role
 		)
 		values(
-		#{userId}
-		,#{password}
+		#{userId}<!-- ・マッパーインターフェースから受け取る引数をSQL中で使用する場合、#{メソッド引数名}のように記載します。 -->
+		,#{password}<!-- メソッド引数をMUserクラスにしている -->>
 		,#{userName}
 		,#{birthday}
 		,#{age}

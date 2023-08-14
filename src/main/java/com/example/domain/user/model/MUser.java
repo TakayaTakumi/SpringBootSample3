@@ -12,6 +12,15 @@ import javax.persistence.Transient;
 
 import lombok.Data;
 
+
+/*@Data クラスをアノテートすると、以下のアノテーションを全て設定したのと同じ効果を得られる。
+@ToString
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode*/
+/*@Entity テーブルのカラムを宣言する場所がエンティティ*/
+/*エンティティに対応付けるDBのテーブル名を指す。*/
 @Data
 @Entity
 @Table(name = "m_user")
@@ -31,3 +40,5 @@ public class MUser {
 	@Transient
 	private List<Salary> salaryList;
 }
+
+/*エンティティクラスは、データベースのテーブルのレコード(データそのものを指す)をjavaのオブジェクトとして扱う*/

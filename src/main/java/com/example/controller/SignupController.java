@@ -40,11 +40,11 @@ public class SignupController {
 	@Autowired
 	private UserApplicationService userApplicationService;
 	
-	
+	/*UserServiceimpl.javaのModelMapperを呼び出している*/
 	@Autowired
 	private UserService userService;
 	
-	
+	/*JavaConfig.javaのModelMapperを呼び出してる*/
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -85,7 +85,8 @@ public class SignupController {
 		 *form.toString()は@ModelAttribute SignupForm formのformを書く*/
 		log.info(form.toString());
 		
-		
+		/*modelMapper.mapメソッドを使うことによりフィールドの内容を簡単にコピーできる
+		 * 画面に変更があっても、サービスの修正が不要になる。他の画面からもサービスを再利用できるようになる。*/
 		//formをMUserクラスに変換
 		MUser user = modelMapper.map(form, MUser.class);
 		
@@ -96,7 +97,7 @@ public class SignupController {
 		return "redirect:/login";
 	}
 	
-	/**デーｔベース関連の例外処理*/
+	/**データベース関連の例外処理*/
 	@ExceptionHandler(DataAccessException.class)
 	public String dataAccessExceptionHandler(DataAccessException e,Model model) {
 		

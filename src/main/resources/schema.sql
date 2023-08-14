@@ -6,12 +6,14 @@ CREATE TABLE IF NOT EXISTS employee /*テーブルがない場合は作成しな
    --VARCHER(50)の様に定義した場合は50以下の長さであれば文字列を格納できる　3章3
    age INT
 );
-/*ユーザーマスタ*/ CREATE TABLE IF NOT EXISTS m_user
+/*CREATE TABLE IF NOT EXISTS　テーブルがない場合は作成しなさいということ
+ユーザーマスタ*/ 
+CREATE TABLE IF NOT EXISTS m_user
 (
    user_id VARCHAR (50) PRIMARY KEY,
    password VARCHAR (100),
    user_name VARCHAR (50),
-   birthday DATE,
+   birthday DATE,/*DATE型　日付を格納するのに使用するデータ型です*/
    age INT,
    gender INT,
    department_id INT,
@@ -27,9 +29,5 @@ CREATE TABLE IF NOT EXISTS employee /*テーブルがない場合は作成しな
    user_id VARCHAR (50),
    year_month VARCHAR (50),
    salary INT,
-   PRIMARY KEY
-   (
-      user_id,
-      year_month
-   )
+   PRIMARY KEY(user_id,year_month)/*PRIMARY KEY(user_id,year_month)　('user@co.jp','2020/11'),(user@co.jp','2020/12')があるがidとmonth二つでをワンセットで扱う*/
 );

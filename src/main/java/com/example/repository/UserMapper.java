@@ -7,10 +7,16 @@ import org.apache.ibatis.annotations.Param;
 
 import com.example.domain.user.model.MUser;
 
+
+/*1@Mapperアノテーションを付けたインタフェースのメソッドは、実際のSQLクエリやデータベース操作と対応しているとみなされます。
+ *2 SQLをXMLファイルに記述し、Javaのインターフェースのメソッドを実行すると、メソッド名に対応するSQLが実行されます。
+ *3MyBatisは、一般的なO/Rマッパーのようにデータベースのテーブル構造とオブジェクトをマッピングするのではなく、
+ *　「SQL文とオブジェクトをマッピングする」点が特徴
+ *4mybatisでリポジトリを作成するためにつける*/
+
 @Mapper
 public interface UserMapper{
 
-	
 	/**ユーザー登録*/
 	public int insertOne(MUser user);
 	
