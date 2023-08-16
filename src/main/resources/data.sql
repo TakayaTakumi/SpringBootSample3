@@ -21,7 +21,8 @@ VALUES
    age,
    gender,
    department_id,
-   role
+   role/*役割の意味を持つ　ADMINやUSERが入る　UserServiceImpl.java ユーザーの部署や役割などの情報
+   		roleについてわからなくなったら解体新書p226を見るといい*/
 )
 VALUES
 (

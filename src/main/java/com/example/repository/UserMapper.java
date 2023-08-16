@@ -21,9 +21,10 @@ public interface UserMapper{
 	public int insertOne(MUser user);
 	
 	/*public List<MUser> findMany();　select文の実行結果が複数になる場合はメソッドの戻り値をListにする*/
+	/* 検索条件で一致するユーザーを取得 */
 	/**ユーザー取得*/
 	public List<MUser> findMany(MUser user);
-	
+	/*ユーザー一覧から選択したユーザーの詳細を別画面で表示*/
 	/**ユーザー取得（1件）*/
 	public MUser findOne(String userId);
 	

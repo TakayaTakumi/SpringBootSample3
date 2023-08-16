@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div layout:fragment="content">
+	<div layout:fragment="content"> <!-- layout:fragment="content"を使うことでこの部分は他のページの"content"フラグメントによって置き換えられる -->
 		<div class="header border-bottom">
 			<h1 class="h2">ユーザー一覧画面</h1>
 		</div>
@@ -56,7 +56,8 @@
 						<td th:text="${item.age}"></td>
 						<td th:text="${item.gender==1}?'男性':'女性'"></td><!--男性が1でそれ以外では女性を表示している-->
 						<td>
-							<a class="btn btn-primary" th:href="@{'/user/detail/'+${item.userId}}">詳細</a>
+							<a class="btn btn-primary" th:href="@{'/user/detail/'+${item.userId}}">詳細</a><!--@がつくと中カッコ{}内をリンク
+							のURLを動的に設定している　詳細ボタンを押すと結果として詳細画面に移動する-->
 						</td>
 					</tr>
 				</tbody>

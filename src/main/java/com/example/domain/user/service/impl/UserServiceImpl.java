@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.findMany(user);
 	}
 
+	/*MUser.javaを呼び出し、returnでユーザー一覧から選択したユーザーの詳細を別画面で表示*/
 	/**ユーザー取得(一件)*/
 	@Override
 	public MUser getUserOne(String userId) {

@@ -7,11 +7,12 @@
 <mapper namespace="com.example.repository.UserMapper">
 	<!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
 	<!-- マッピング定義（ユーザー） -->
-	<resultMap type="com.example.domain.user.model.MUser"
-		id="user">
+	<resultMap type="com.example.domain.user.model.MUser" id="user">
+	<!-- type属性にはパッケージを含めたクラス名を入れる idには任意の値を入れる　UserMapper.xmlのユーザー一件検索 
+		select id="findOne" resultMap="user" のuserを設定する-->
 
-		<id column="user_id" property="userId" />
-		<result column="password" property="password" />
+		<id column="user_id" property="userId" /><!-- columnにはselect結果のカラム名を設定する data.sqlのINSERT INTO m_userの値-->
+		<result column="password" property="password" /><!-- property属性にはjavaのフィールドを設定する MUser.javaのpublic class MUser の値-->
 		<result column="user_name" property="userName" />
 		<result column="birthday" property="birthday" />
 		<result column="age" property="age" />
