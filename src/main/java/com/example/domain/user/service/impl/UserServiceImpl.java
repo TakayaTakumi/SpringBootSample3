@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.findMany(user);
 	}
 
-	/*MUser.javaを呼び出し、returnでユーザー一覧から選択したユーザーの詳細を別画面で表示*/
+	/*MUser.javaを呼び出し、returnでusermapper.xmlに移行(ユーザー一覧から選択したユーザーの詳細を別画面で表示)*/
 	/**ユーザー取得(一件)*/
 	@Override
 	public MUser getUserOne(String userId) {
@@ -64,12 +64,14 @@ public class UserServiceImpl implements UserService {
 		//パスワード暗号化
 
 		String encryptPassword = encoder.encode(password);
+		
+		/*usermapper.xmlでupdateOneの値を格納する*/
 		mapper.updateOne(userId, password, userName);
 
 		//例外を発生させる
 		//int i = 1/0;
 	}
-
+	/* deleteUserOneが発動するとmapper.deleteOneが発動すしcountに格納される*/
 	/**ユーザー削除(1件)*/
 	@Override
 	public void deleteUserOne(String userId) {

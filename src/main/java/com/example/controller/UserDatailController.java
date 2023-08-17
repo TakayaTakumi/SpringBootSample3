@@ -48,8 +48,10 @@ public class UserDatailController {
 		return"user/detail";
 	}
 	
+	/*params属性にはdetail.htmlのbuttonタグのname属性と結びつけることによって
+	 * コントローラーで受け取るメソッドを変更することができる*/
 	/**ユーザー更新処理*/
-	@PostMapping(value ="/detail",params="update")
+	@PostMapping(value ="/detail",params="update")//value属性にはurlを設定する
 	public String updateUser(UserDetailForm form, Model model) {
 		
 		
@@ -66,8 +68,10 @@ public class UserDatailController {
 		return "redirect:/user/list";
 	}
 	
+	/*params属性にはdetail.htmlのbuttonタグのname属性と結びつけることによって
+	 * コントローラーで受け取るメソッドを変更することができる*/
 	/**ユーザー削除処理*/
-	@PostMapping(value = "/detail",params ="delete")
+	@PostMapping(value = "/detail",params ="delete")//value属性にはurlを設定する
 	public String deleteUser(UserDetailForm form, Model model) {
 		
 		//ユーザーを削除

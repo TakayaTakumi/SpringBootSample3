@@ -7,7 +7,7 @@
 	<!-- CSS 読込 -->
 	<link rel=" stylesheet" th:href="@{/css/user/list.css}">
 	<!--JS読込-->
-	<script th:src="@{/js/user/detail.js}" defer></script> 
+	<script th:src="@{/js/user/detail.js}" defer></script>
 </head>
 
 <body>
@@ -61,26 +61,27 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<!--ボタンエリア-->
 			<div class="text-center">
-				<!--削除ボタン-->
+				<!--削除ボタン--><!--UserDatailControllerのparams属性にはbuttonタグのname属性と結びつけることによって
+									 コントローラーで受け取るメソッドを変更することができる-->
 				<button class="btn btn-danger" type="submit" name="delete">
 					削除
 				</button>
-				<!--更新ボタン-->
+				<!--更新ボタン--><!--上記と同じ-->
 				<button class="btn btn-primary" type="submit" name="update">
 					更新
 				</button>
-				
+
 				<!--RESTボタンエリア-->
 				<div class="text-center mt-2">
-				<!--削除ボタン-->
-				<button id="btn-delete" class="btn btn-danger" type="button">削除(REST)</button>
-				<!--更新ボタン-->
-				<button id="btn-update" class="btn btn-primary" type="button">更新(REST)</button>
+					<!--削除ボタン-->
+					<button id="btn-delete" class="btn btn-danger" type="button">削除(REST)</button>
+					<!--更新ボタン-->
+					<button id="btn-update" class="btn btn-primary" type="button">更新(REST)</button>
 				</div>
-				
+
 				<!--給料情報-->
 				<th:block th:if="*{salaryList != null and salaryList.size()>0}">
 					<div class="header border-bottom">
