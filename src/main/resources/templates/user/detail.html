@@ -52,10 +52,12 @@
 						<td th:text="*{ gender == 1 ? '男性': '女性'}">
 						</td>
 					</tr>
-					<tr>
-						<th>部署名</th>
+					<tr><!--表を作成する際には<tr>～</tr>で表の横部分を指定する-->
+						<th>部署名</th><!--その中に<th>～</th>や<td>～</td>で表題や縦軸を指定してセルを定義します。-->
 						<td>
-							<span th:if="*{department != null}" th:text="*{department.departmentName}">
+							<!--if文と同じ部署情報が入っていたらth:textで部署情報を表示する-->
+							<span th:if="*{department != null}"　 
+							th:text="*{department.departmentName}">
 							</span>
 						</td>
 					</tr>

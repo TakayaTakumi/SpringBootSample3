@@ -20,12 +20,12 @@ import lombok.Data;
 @RequiredArgsConstructor
 @EqualsAndHashCode*/
 /*@Entity テーブルのカラムを宣言する場所がエンティティ*/
-/*エンティティに対応付けるDBのテーブル名を指す。*/
+
 
 //エンティティクラスです
 @Data
 @Entity
-@Table(name = "m_user")
+@Table(name = "m_user")/*エンティティに対応付けるDBのテーブル名を指す。*/
 public class MUser {
 	@Id
 	private String userId;

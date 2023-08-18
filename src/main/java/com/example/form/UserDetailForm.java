@@ -21,6 +21,6 @@ public class UserDetailForm {
 	private Date birthday;
 	private Integer age;
 	private Integer gender;
-	private Department department;
+	private Department department;/*Department.javaから持ってきている　ユーザ詳細画面に部署情報追加！*/
 	private List<Salary> salaryList;
 }
