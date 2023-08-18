@@ -22,12 +22,12 @@
 		<result column="gender" property="gender" />
 		<result column="department_Id" property="departmentId" />
 		<result column="role" property="role" />
-		<association property="department" resultMap="department" />
+		<association property="department" resultMap="department" /><!-- associationタグはマッピング定義内に別のマッピング定義を挿入できる -->
 		<collection property="salaryList" resultMap="salary"
 			columnPrefix="salary_" />
 	</resultMap>
 
-	<!-- マッピング定義(部署) -->
+	<!-- マッピング定義(部署) --><!-- これをassociationで挿入している -->
 	<resultMap type="com.example.domain.user.model.Department"
 		id="department">
 		<id column="department_id" property="departmentId" />
@@ -98,7 +98,18 @@
 
 	<!-- ユーザー一件検索 -->
 	<select id="findOne" resultMap="user">
-
+<!--	最初の形　下記
+		select
+		　＊
+		from
+		m_user
+		left join(結合の意味がある) m_department on m_user.department_id 
+		(この結合は、m_userテーブルのdepartment_idカラムとm_departmentテーブルのdepartment_idカラムを使用して行われます。)
+		= m_department.department_id
+		where
+		m_user.user_id=#{userId}
+		(WHERE句を使用して、m_userテーブルのuser_idカラムが指定されたuserIdパラメータと一致するレコードをフィルタリングします。)-->
+		
 		select
 
 		m_user.user_id,
