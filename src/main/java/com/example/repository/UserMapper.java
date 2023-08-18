@@ -15,7 +15,7 @@ import com.example.domain.user.model.MUser;
 
 @Mapper
 public interface UserMapper {
-
+	/*引数MUserはMUser.javaから引っ張ってきている()*/
 	/**ユーザー登録*/
 	public int insertOne(MUser user);
 

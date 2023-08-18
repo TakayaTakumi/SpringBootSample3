@@ -7,12 +7,15 @@
 <mapper namespace="com.example.repository.UserMapper">
 	<!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
 	<!-- マッピング定義（ユーザー） -->
-	<resultMap type="com.example.domain.user.model.MUser" id="user">
-	<!-- type属性にはパッケージを含めたクラス名を入れる idには任意の値を入れる　UserMapper.xmlのユーザー一件検索 
-		select id="findOne" resultMap="user" のuserを設定する-->
+	<resultMap type="com.example.domain.user.model.MUser"
+		id="user"><!-- MUser.javaと結びついている -->
+		<!-- type属性にはパッケージを含めたクラス名を入れる idには任意の値を入れる　UserMapper.xmlのユーザー一件検索 select 
+			id="findOne" resultMap="user" のuserを設定する -->
 
-		<id column="user_id" property="userId" /><!-- columnにはselect結果のカラム名を設定する data.sqlのINSERT INTO m_userの値-->
-		<result column="password" property="password" /><!-- property属性にはjavaのフィールドを設定する MUser.javaのpublic class MUser の値-->
+		<id column="user_id" property="userId" /><!-- columnにはselect結果のカラム名を設定する 
+			data.sqlのINSERT INTO m_userの値 -->
+		<result column="password" property="password" /><!-- property属性にはjavaのフィールドを設定する 
+			MUser.javaのpublic class MUser の値 -->
 		<result column="user_name" property="userName" />
 		<result column="birthday" property="birthday" />
 		<result column="age" property="age" />
@@ -66,11 +69,11 @@
 		)
 	</insert>
 
-	<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、
-	idのfindManyを使うことで対応するクエリを参照できる-->
+	<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、 
+		idのfindManyを使うことで対応するクエリを参照できる -->
 	<!-- ユーザー複数件取得 -->
 	<select id="findMany" resultType="MUser">
-<!-- 下記の分でsqlからm_userを取得するための文を記載している　 -->
+		<!-- selectタグの中で*を使って、m_userテーブルからすべての列を選択します。 -->
 		select
 
 		*
@@ -78,10 +81,16 @@
 		from
 
 		m_user
+		<!-- whereタグ内のifが1つでもtrueになるとwhere句を追加する。つまり、where句が必ず付くかどうか分からない場合に、このタグを使います。
+		WHERE句は、データベースからデータを抽出する際に、特定の条件に一致するレコードのみを返すための句です。-->
 		<where>
+<!-- ifはif文と同じ testに条件式を書く -->
+<!-- userId != nullでない場合user_id列がuserIdを部分文字列として含む行を検索します。 LIKE演算子を使って部分一致の検索を行います -->
 
-			<if test="userId != null">user_id like '%' || #{userId} ||'%'</if>
-
+			<if test="userId != null">user_id like '%' || #{userId} || '%'</if>
+			<!-- ||は文字列を結合 %はワイルドカード（あらゆる文字列を代替する記号） 例　WHERE name LIKE '%son%'だった場合（例："Johnson", 
+				"Jackson", "Mason"など）。 -->
+			>
 			<if test="userName != null">and user_name like '%' || #{userName} || '%'</if>
 
 		</where>

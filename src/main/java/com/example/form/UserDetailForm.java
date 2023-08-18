@@ -7,9 +7,11 @@ import com.example.domain.user.model.Department;
 import com.example.domain.user.model.Salary;
 
 import lombok.Data;
-	/*UserDetailForm　訳　ユーザー詳細フォーム
-	 * ユーザー詳細画面のフォームクラス MUserとは違う
-	 * MUserから	＠Dataを使って持ってきている*/
+
+/*表示用*/
+/*UserDetailForm　訳　ユーザー詳細フォーム
+* ユーザー詳細画面のフォームクラス MUserとは違う
+* MUserから	＠Dataを使って持ってきている*/
 @Data
 public class UserDetailForm {
 

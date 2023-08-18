@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 import lombok.Data;
 
-
+/*登録用　エンティティクラスは，データベースのテーブルのレコードをJavaのオブジェクトとして扱うためのクラスです*/
 /*@Data クラスをアノテートすると、以下のアノテーションを全て設定したのと同じ効果を得られる。
 @ToString
 @Getter
@@ -21,6 +21,8 @@ import lombok.Data;
 @EqualsAndHashCode*/
 /*@Entity テーブルのカラムを宣言する場所がエンティティ*/
 /*エンティティに対応付けるDBのテーブル名を指す。*/
+
+//エンティティクラスです
 @Data
 @Entity
 @Table(name = "m_user")
