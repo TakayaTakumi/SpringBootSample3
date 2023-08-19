@@ -31,15 +31,17 @@ public class UserDatailController {
 	 * ユーザー詳細画面を表示*/
 	@GetMapping("/detail/{userId:.+}")/*@PathVariable("userId")には{userId:.+}の変数名を入れる*/
 	public String getUser(UserDetailForm form,Model model,@PathVariable("userId")String userId) {
-		/*passwordにnullが入っているのはセキュリティー上の保護のため表示されたらまずいから*/
+		
+		
 		//ユーザーを1件取得
 		MUser user = userService.getUserOne(userId);
-		user.setPassword(null);
+		user.setPassword(null);/*passwordにnullが入っているのはセキュリティー上の保護のため表示されたらまずいから*/
 		/*modelMapper.mapメソッドを使うことによりフィールドの内容を簡単にコピーできる
 		 * 画面に変更があっても、サービスの修正が不要になる。他の画面からもサービスを再利用できるようになる。*/
 		//MUserをformに変換
 		form = modelMapper.map(user, UserDetailForm.class);
-		form.setSalaryList(user.getSalaryList());
+		form.setSalaryList(user.getSalaryList());//MUser.java(MUser userと定義している)→Salary.javaから給料情報をgetしている
+												 //UserDetailForm.javaのsetSalaryListにsetしている
 		
 		//Modelに登録
 		model.addAttribute("userDetailForm", form);

@@ -23,4 +23,5 @@ public class UserDetailForm {
 	private Integer gender;
 	private Department department;/*Department.javaから持ってきている　ユーザ詳細画面に部署情報追加！*/
 	private List<Salary> salaryList;
-}
+	/*Salary.javaから持ってきている(複数だからLIstを使う)詳細画面でも給料を表示させるため　UserDatailControllerから格納している*/
+	}

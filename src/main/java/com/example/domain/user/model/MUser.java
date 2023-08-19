@@ -38,9 +38,9 @@ public class MUser {
 	private String role;
 	@ManyToOne(optional =true)
 	@JoinColumn(insertable=false, updatable=false, name ="departmentId")
-	private Department department;
+	private Department department;/*Department.javaからDepartmentクラスを持ってきている*/
 	@Transient
 	private List<Salary> salaryList;
 }
-
+/*なぜ追加していくのか別クラスのインターフェイスを作成することにより可読性をよくしている、その他のメソッドの記載があると見にくいため*/
 /*エンティティクラスは、データベースのテーブルのレコード(データそのものを指す)をjavaのオブジェクトとして扱う*/
