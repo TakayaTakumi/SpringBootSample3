@@ -15,7 +15,10 @@ import com.example.form.UserDetailForm;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+/*SLF4J(Simple Logging Facade For Java)」はいろんなログ出力ライブラリを切り替えて使うためのインターフェース的なもの。
+ * だから実装的なライブラリと一緒に使うということになるのですね。*/
+@Slf4j//エラーについての内容
+
 @Controller
 @RequestMapping("/user")
 public class UserDatailController {
@@ -62,6 +65,8 @@ public class UserDatailController {
 		userService.updateUserOne(form.getUserId(),
 				form.getPassword(),
 				form.getUserName());
+		
+		/*エラー内容の詳細を確認するためにはスタックトレースをlombokのlogメソッドにExeptionクラスを渡すとスタックトレースを出力してくれる */
 		}catch(Exception e) {
 			log.error("ユーザー更新でエラー",e);
 		}

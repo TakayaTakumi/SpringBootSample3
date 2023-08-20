@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.findOne(userId);
 	}
 
+	
 	/*@Transaction は、例外が起こったときに自動でロールバックしてくれるアノテーション　ロールバック(例外が起こる前まで戻ること)*/
 	/**ユーザー更新(1件)*/
 	@Transactional
