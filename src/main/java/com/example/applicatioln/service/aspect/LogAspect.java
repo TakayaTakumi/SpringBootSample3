@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Aspect
-@Component
+@Aspect//Aspect(アスペクト) 複数のクラスにまたがる関心事をモジュール化したもの(まとめたもの)。
+@Component//Spring MVCに限らず、SpringのDIコンテナにbeanとして登録したいクラスへ付与する。
 @Slf4j
 public class LogAspect {
 
@@ -20,15 +20,32 @@ public class LogAspect {
 	 * 対象:[UserService]をクラス名に含んでいる
 	 */
 
-	@Before("execution(* *..*.*UserService.*(..))")
-	public void startLog(JoinPoint jp) {
+	
+	/*∗ (*)アスタリスクを使用すると、任意の文字列を表します。*/
+	/*.. (ドット 2 文字) パッケージ部分では、ドット2文字が0個以上のパッケージを表します。
+	 * メソッドの引数部分では、ドット2文字が0個以上の引数を表します。*/
+	
+	/*@Beforeが付与されたクラスは、execution内の条件に当てはまる場合、対象の処理の実行前に@Beforeメソッドが実行されます。*/
+	@Before("execution(* *..*.*UserService.*(..))")//対象:[UserService]をクラス名に含んでいる
+	
+	/*JoinPoint(ジョインポイント)　Advice(下記参照)を挿入する場所。場所といってもソースの特定の位置というわけではなく、
+	 * メソッド(やコンストラクタ)の実行前、メソッド(やコンストラクタ)の実行後、、といったように実行されるタイミングのこと。*/
+	/*ジョインポイントを指定する場合、メソッドにJoinPointのアノテーションをつける必要がある 
+	 * @Before @After @AfterReturning @Around @AfterThrowing*/
+	public void startLog(JoinPoint jp) /*JoinPoint jp は、Spring AOPにおいてアスペクトが
+	アドバイス（Advice）を適用するポイントを表すオブジェクトを指します。*/{
 		log.info("メソッド開始:" + jp.getSignature());
 	}
 
 	/** 
 	 * サービスの実行後にログ出力する. 
-	 * 対象:[UserService]をクラス名に含んでいる. 
-	 */
+	 * 対象:[UserService]をクラス名に含んでいる. */
+	
+	/*戻り値*：全ての戻り値を指定
+	パッケー名∗..∗：全てのパッケージが対象
+	クラス名∗Controller：末尾にControllerと付くクラスが対象
+	メソッド名*：全ての戻り値を指定
+	引数..：全ての引数が対象*/
 	@After("execution(* *..*.*UserService.*(..))")
 	public void endLog(JoinPoint jp) {
 		log.info("メソッド終了:" + jp.getSignature());
