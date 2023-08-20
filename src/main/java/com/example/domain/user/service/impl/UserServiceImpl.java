@@ -11,6 +11,7 @@ import com.example.domain.user.model.MUser;
 import com.example.domain.user.service.UserService;
 import com.example.repository.UserMapper;
 
+
 /*世間一般にいうServiceクラスは「ドメイン知識を持った手続きクラス」を指すことが多いです*/
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,6 +55,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.findOne(userId);
 	}
 
+	/*@Transaction は、例外が起こったときに自動でロールバックしてくれるアノテーション　ロールバック(例外が起こる前まで戻ること)*/
 	/**ユーザー更新(1件)*/
 	@Transactional
 	@Override
