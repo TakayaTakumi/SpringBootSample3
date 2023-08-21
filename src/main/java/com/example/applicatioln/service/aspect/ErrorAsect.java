@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-//Aspect(アスペクト) 複数のクラスにまたがる関心事をモジュール化したもの(まとめたもの)。
+//Aspect(アスペクト) 複数のクラスにまたがる関心事をモジュール化したもの(まとめたもの)p372に記載。
 //@Componentアノテーションを付けたクラスはコンポーネントして扱われる
 //@Slf4j ログを出力するアノテーション
 @Aspect

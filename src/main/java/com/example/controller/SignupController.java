@@ -99,24 +99,34 @@ public class SignupController {
 		return "redirect:/login";
 	}
 
+	/*@ExceptionHandlerアノテーションをつけたメソッドを用意すると例外処理を実装できる(複数可)
+	 * 例外発生時に共通エラー画面に遷移する。その際にエラーメッセージなどをModelクラスに登録する
+	 * */
+	
 	/**データベース関連の例外処理*/
-	@ExceptionHandler(DataAccessException.class)
+	@ExceptionHandler(DataAccessException.class)//ataAccessException.java
+	/*Exception Handlerは一言でいうと、「アプリケーション内のエラーの監視役」アプリケーション内で指定した例外が発生した時に
+	 * 決まった操作をしたいときに使用するよ。
+	 * Exception Handlerを定義することで、アプリケーション全体のエラーを見張ってくれるので、何度も同じ処理を書く必要がなくなるよ！*/
 	public String dataAccessExceptionHandler(DataAccessException e, Model model) {
 
 		//空文字をセット
-		model.addAttribute("error", "");
+		model.addAttribute("error", "");/*htmlの${error}に登録されるがエラー内容が表示されるとどんなエラーかわかってしまうため
+		セキュリティー的に悪い*/
 
 		//メッセージをModelに登録
-		model.addAttribute("message", "SignupControllerで例外が発生しました");
+		model.addAttribute("message", "SignupControllerで例外が発生しました");//htmlの${message}と結びついている
 
-		//HTTPのえらコード(500)をModelに登録
+		/* Internal Server Errorは、内部サーバーエラーという意味
+		 * HttpStatus.INTERNAL_SERVER_ERRORでHTTPのえらコード(500)をModelに登録*/
 		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
 
-		return "error";
+		return "error";//error.htmlに画面を遷移
 	}
-
+	
+//Exception Handlerは一言でいうと、「アプリケーション内のエラーの監視役」
 	/**その他の例外処理*/
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)//LogAspect.java
 	public String exceptionHandler(Exception e, Model model) {
 
 		//空文字をセット
