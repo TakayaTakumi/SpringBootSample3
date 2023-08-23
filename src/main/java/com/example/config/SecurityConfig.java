@@ -67,12 +67,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//ログイン処理
 		http
 				.formLogin()
-				.loginProcessingUrl("/login")//ログイン処理のパス
-				.loginPage("/login")//ログインページの指定
+				.loginProcessingUrl("/login")//ログイン処理のパス th:action="@{/login}"
+				.loginPage("/login")//ログインページの指定 ます。 ログイン画面のコントローラーの@GetMapping("/login")の部分と、パスを一致させます。
 				.failureUrl("/login?error")//ログイン失敗時の遷移先
-				.usernameParameter("userId")//ログインページのユーザーID
-				.passwordParameter("password")//ログインページのパスワード
-				.defaultSuccessUrl("/user/list", true);//成功後の遷移先
+				.usernameParameter("userId")//ログインページのユーザーID userNameParameter("ユーザーIDのname属性")ログイン画面のユーザーID入力欄のname属性を設定します。
+				.passwordParameter("password")//ログインページのパスワード passwordParameter("パスワードのname属性")ログイン画面のパスワード入力欄のname属性を設定します。
+				.defaultSuccessUrl("/user/list", true);//成功後の遷移先 第2引数にtrueを指定すると、第1引数のパスに強制的に遷移します。
 		/*ここでは認証に関わるパラメータを指定してます
 		.loginProcessingUrl("/login")
 		ログインの処理をするURL
