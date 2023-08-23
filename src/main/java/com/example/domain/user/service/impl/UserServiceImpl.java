@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper mapper;
 
+	/*SecurityConfig.javaに記述している　パスワードを暗号化するインターフェイス*/
 	@Autowired
 	private PasswordEncoder encoder;
 
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		String encryptPassword = encoder.encode(password);
 		
 		/*usermapper.xmlでupdateOneの値を格納する*/
-		mapper.updateOne(userId, password, userName);
+		mapper.updateOne(userId, encryptPassword, userName);
 
 		//例外を発生させる
 		//int i = 1/0;

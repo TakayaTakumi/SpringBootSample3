@@ -20,9 +20,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-	
+	/*PasswordEncoderというインターフェースがSpringで用意されています。これは、パスワードを暗号化するためのインターフェースです。*/
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		/*パスワードをハッシュ化するBCryptPasswordEncoderの使用が推奨されています。*/
 		return new BCryptPasswordEncoder();
 	}
 
