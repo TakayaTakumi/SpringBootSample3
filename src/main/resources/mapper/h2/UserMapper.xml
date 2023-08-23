@@ -178,6 +178,9 @@
 		user_id = #{userId}
 	</delete>
 
+
+<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、 
+		idのfindLoginUserを使うことで対応するクエリを参照できる -->
 	<!-- ログインユーザー情報取得 -->
 	<select id="findLoginUser" resultType="MUser">
 		select

@@ -132,9 +132,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// ユーザー データ で 認証 
 		auth
 				.userDetailsService(userDetailsService)
-				.passwordEncoder(encoder);
+				.passwordEncoder(encoder);//パスワードの暗号化をしている
 
-	}
+	}/*ユーザーデータ認証をするためには、auth.userDetailsService()メソッドを使います。
+	このメソッドの引数に、自作したUserDetailsServiceを設定します。
+	また、パスワードの暗号化も必須のため、passwordEncoderメソッドを使用します。*/
 }
 
 /*セキュリティ設定クラスを用意するためには、以下の設定を行います。
