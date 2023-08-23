@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -113,6 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		PasswordEncoder encoder = passwordEncoder();
 
+		/*インメモリ認証とは、仮のユーザーIDとパスワードを用意してログインできるようにする機能です。*/
 		//インメモリ認証
 		/*
 		auth

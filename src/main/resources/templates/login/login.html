@@ -22,8 +22,11 @@
  th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger"></p>
 上記では、セッションにセキュリティのエラーがあれば、エラーメッセージを表示する、という内容-->
 			<!--エラーメッセージを表示するためには、サンプルコードと同じコードを書きます。-->
+			<!--ログインエラーがあったときだけ表示する条件次にメッセージ定義の内容を表示するアクセサ。-->
 			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
 				th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">ログインエラーメッセージ</p>
+				<!--SPRING_SECURITY_LAST_EXCEPTIONはmessages.propertiesのAbstractUserDetailsAuthenticationProvide～が結びついて表示される-->
+				
 				
 			<!--ユーザーID-->
 			<div class="form-group">
