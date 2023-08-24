@@ -91,18 +91,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		true : ログイン画面した後必ずlistにとばされる
 		false : (認証されてなくて一度ログイン画面に飛ばされても)ログインしたら指定したURLに飛んでくれる*/
 
+		
+		/*Spring セキュリティがログアウト処理をやってくれるため、ログアウトのコントローラーは不要になります。
+		 * ログアウトコントローラのコードをコメントアウトしても、ログアウト処理が行われます。今までのログアウトコン
+		 * コントローラーは、あくまでも画面遷移のために使用していました。
+		 * */
 		//ログアウト処理
 		http
 				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutUrl("/logout")
-				.logoutSuccessUrl("/login?logout");
+				.logoutUrl("/logout")//ログアウトのURL
+				.logoutSuccessUrl("/login?logout");//ログアウト成功時のURL
 
-		/*.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		ログアウトのURL
-		.logoutSuccessUrl("/login?logout")*/
+		/*logout補足
+		 * CSRFを追加するとHTTP POSTのみ反応する。
+		->http.logout().logoutUrl("/logout")
+		  とした場合、LogoutFilterは「/logout」のPOSTに対してのみ反応する
+		  これによって悪意のあるuserがuserを強制的にlogoutできなくなる。
+		logoutをGET methodで行いたい場合は、サンプルのように「logoutRequestMatcher」
+		を利用する。
+		 * logoutRequestMatcher
+		　・Springではログアウト処理はデフォルトでPOSTメソッド送る
+		　・GETで送る場合はlogoutRequestMatcherを使う
+		logoutUrl
+		　・POSTでログアウトする設定
+		logoutSuccessUrl
+		　・ログアウト成功時の遷移先
+		　・これでログアウトすると、ユーザーセッションが破棄されます */
+
 		
-		
+
 		/*CSRF（クロスサイトリクエストフォージェリ）はWebシステムを悪用したサイバー攻撃の一種です*/
 		//CSRF対策を無効を無効に設定(一時的)
 		//http.csrf().disable();
@@ -135,8 +153,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(encoder);//パスワードの暗号化をしている
 
 	}/*ユーザーデータ認証をするためには、auth.userDetailsService()メソッドを使います。
-	このメソッドの引数に、自作したUserDetailsServiceを設定します。
-	また、パスワードの暗号化も必須のため、passwordEncoderメソッドを使用します。*/
+		このメソッドの引数に、自作したUserDetailsServiceを設定します。
+		また、パスワードの暗号化も必須のため、passwordEncoderメソッドを使用します。*/
 }
 
 /*セキュリティ設定クラスを用意するためには、以下の設定を行います。
