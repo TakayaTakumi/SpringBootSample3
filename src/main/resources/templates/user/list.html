@@ -22,6 +22,7 @@
 		<div class="mb-4">
 			<form id="user-search-form" method="post" th:action="@{/user/list}" class="form-inline"
 				th:object="${userListForm}">
+				<!--form タグでth:action属性を使っているとこの属性を使っていると、CSRFトー クンのパラメーターが自動で追加されます。-->
 				<div class="form-group">
 					<label for="userId" class="mr-2">ユーザーID</label>
 					<input type="text" class="form-control" th:field="*{userId}" />
