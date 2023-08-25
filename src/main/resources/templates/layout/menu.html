@@ -8,11 +8,12 @@
 <body>
 	<div layout:fragment="menu" class="bg-light">
 		<ul class="nav nav-pills nav-stacked">
-			<li role="presentation">
+			<li role="presentation"><!--「LI」とは「list item」の略で、リストの項目を表示するために使用するタグです。
+				ole="presentation"　視覚表現を行う要素に対して指定する属性です　解体新書p450に詳しく書いている-->
 				<a class="nav-link" th:href="@{/user/list}">ユーザー一覧</a>
 			</li>
 			<li role="presentation" sec:authorize="hasRole('ADMIN')">
-				<a class="nav-link" th:href="@{'/admin'}">アドミン専用</a>
+				<a class="nav-link" th:href="@{'/admin'}">アドミン専用</a><!--アドミン専用の表示にnav-linkと言う/user/listのlinkをつけている-->
 			</li>
 		</ul>
 	</div>

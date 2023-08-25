@@ -53,16 +53,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				// /はアクセス制限をかけない
 				.authorizeRequests()
+				/*・URLごとの権限管理の設定オプションは「authorizeRequests()」から始まります。
+				  ・authorizeRequestsを宣言してからantMatchers()を使うことができます*/
 				.antMatchers("/login").permitAll()//直リンクOK
+				/*・権限管理対象を指定するオプションです。
+				　・URL、HTTPメソッドごとに管理が可能です。
+				　・"/"など指定されたURLは「permitAll()」オプションを使って全体観覧権限を与えました*/
 				.antMatchers("/user/signup").permitAll()//直リンクOK
 				.antMatchers("/user/signup/rest").permitAll()//直リンクOK
 				.antMatchers("/admin").hasAuthority("ROLE_ADMIN")//制限制御
 				.anyRequest().authenticated();//それ以外直リンクNG
+		/*設定された値以外のURLを示します。
+		今回は「authenticated()」を追加して残りURLに対してはすべて認証ユーザーのみ許可します。
+		認証ユーザーはつまりログインされているユーザーのことです。*/
+		
+		
 		/*antMatchers("/signin") ← ログイン画面
 		ここには全てのユーザーがアクセス可
 		antMatchers("/admin") ← 管理画面
 		ここには"ADMIN"権限がないとアクセスできない
 		Userテーブルのroleのカラムに入っている"ROLE_ADMIN＂で認証されます
+		.hasAuthority("ROLE_ADMIN")
+		指定のURLに対して認可を設定するためには、hasAuthorityなどのメソッドを使用します。このメソッドには権限を指定します。
+		その権限をユーザーが持っていれば、URLにアクセスできます。
 		.anyRequest().authenticated()
 		全てのURLリクエストは認証されているユーザーしかアクセスできないという記述です*/
 
@@ -91,7 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		true : ログイン画面した後必ずlistにとばされる
 		false : (認証されてなくて一度ログイン画面に飛ばされても)ログインしたら指定したURLに飛んでくれる*/
 
-		
 		/*Spring セキュリティがログアウト処理をやってくれるため、ログアウトのコントローラーは不要になります。
 		 * ログアウトコントローラのコードをコメントアウトしても、ログアウト処理が行われます。今までのログアウトコン
 		 * コントローラーは、あくまでも画面遷移のために使用していました。
@@ -118,8 +130,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		logoutSuccessUrl
 		　・ログアウト成功時の遷移先
 		　・これでログアウトすると、ユーザーセッションが破棄されます */
-
-		
 
 		/*CSRF（クロスサイトリクエストフォージェリ）はWebシステムを悪用したサイバー攻撃の一種です*/
 		//CSRF対策を無効を無効に設定(一時的)
