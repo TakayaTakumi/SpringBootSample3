@@ -10,7 +10,7 @@
 	<link rel="stylesheet" th:href="@{/css/user/signup.css}">
 	<!--JS読込-->
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
-	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script><!--deferはJSファイルの読み込みと実行のタイミングを調整するために使われます。-->
 	<script th:src="@{/js/user/signup.js}" defer></script>
 	<title th:text="#{user.signup.title}"></title><!--タブやお気に入りの表示内容がmessages.propertiesのuser.signup.titleに格納されている値と同じ-->
 </head>

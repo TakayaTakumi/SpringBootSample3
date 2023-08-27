@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor//アノテートすることで、全てのフィールドを引数に受け取るコンストラクタを自動生成できる。
 public class RestResult {
 
 	/**リターンコード*/

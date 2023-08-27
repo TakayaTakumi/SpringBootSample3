@@ -36,26 +36,25 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;
 
+	/*JavaConfig.javaのModelMapperを呼び出してる*/
 	@Autowired
 	private ModelMapper modelMapper;
-
+	/*messages. propertiesから値を受け取る*/
 	@Autowired
 	private MessageSource messageSource;
 
-	
 	/**ユーザーを検索*/
 	@GetMapping("/get/list")
-	public List<MUser>getUserList(UserListForm form){
-		
+	public List<MUser> getUserList(UserListForm form) {
+
 		//formをMUserクラスに変換
 		MUser user = modelMapper.map(form, MUser.class);
-		
+
 		//ユーザー一覧取得
-		List<MUser>userList = userService.getUsers(user);
+		List<MUser> userList = userService.getUsers(user);
 		return userList;
 	}
-	
-	
+
 	/**ユーザーを登録*/
 	@PostMapping("/signup/rest")
 	public RestResult postSignup(@Validated(GroupOrder.class) SignupForm form,
@@ -67,15 +66,18 @@ public class UserRestController {
 			// チェック 結果: NG 
 			Map<String, String> errors = new HashMap<>();
 
+			
+			/*BindingResultのgetFieldErrors()により、フィールド名とエラーメッセージのセットを取得できます。*/
 			// エラーメッセージ 取得 
-
-			for (FieldError error : bindingResult.getFieldErrors()) {
-				String message = messageSource.getMessage(error, locale);
-				errors.put(error.getField(), message);
+			for (FieldError error : bindingResult.getFieldErrors()) {/*バリデーション結果がNGとなったフィールドの名称は、
+				　　　　　　　　　　　　　　　　　　　　　　　　　　　FieldErrorクラスから取得することができます。単項目チェックに引っかかったフィールド*/
+				
+				String message = messageSource.getMessage(error, locale);//getMessage( キー 名, 埋め込み パラメーター, ロ ケール)p121
+				errors.put(error.getField(), message);//error.getField()フィールドの内容を返している
 			}
 
 			// エラー 結果 の 返却 
-			return new RestResult(90, errors);
+			return new RestResult(90, errors);//p487 ポイント2
 		}
 
 		// form を MUser クラス に 変換 
