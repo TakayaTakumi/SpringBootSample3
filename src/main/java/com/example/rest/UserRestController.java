@@ -25,6 +25,10 @@ import com.example.form.SignupForm;
 import com.example.form.UserDetailForm;
 import com.example.form.UserListForm;
 
+/*　@RestControllerアノテーション「コントローラークラスのメソッドで処理した結果を、
+ *そのままレスポンスとしてブラウザへ送信する」ことを表すアノテーションです。
+ *　本来は JSONや XMLなどを返す「 RESTインターフェース」で使うものですが、
+ *「テキストを返す」機能を流用できるので、このアノテーションを利用します*/
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
