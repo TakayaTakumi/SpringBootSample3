@@ -81,7 +81,11 @@ public class UserRestController {
 		}
 
 		// form を MUser クラス に 変換 
-		MUser user = modelMapper.map(form, MUser.class);
+		//Mapper の map メソッドを使ってBeanマッピングを行います。
+		//メソッドを実行した後、MUserオブジェクトが新たに作成され、formの各フィールドの値が作成されたMUserオブジェクトにコピーされます
+		//https://qiita.com/euledge/items/482a113589015590cf19
+		MUser user = modelMapper.map(form, MUser.class); 
+		
 
 		// ユーザー 登録 
 		userService.signup(user);
