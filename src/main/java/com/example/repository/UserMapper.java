@@ -26,7 +26,7 @@ public interface UserMapper {
 
 	/*ユーザー一覧から選択したユーザーの詳細を別画面で表示*/
 	/**ユーザー取得（1件）*/
-	public MUser findOne(String userId);
+	public MUser findOne(String userId);//プライマリーキーが引数になるようにすることでエラーが起きないようになっている
 
 	/*@Paramでパラメータのみ記述する。パラメータが1つの場合は、@Paramの記述は不要。
 	2つ以上の場合は、SQLクエリ内のパラメータとメソッド引数の対応関係の設定のために記述必須。　

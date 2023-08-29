@@ -10,9 +10,8 @@ import com.example.domain.user.model.MUser;
 /*extends JpaRepository
 クラスは、このように「JpaRepository」というインターフェイスを継承しています。
 これは非常に重要です。これを継承することで、自動的に必要なメソッドなどが組み込まれるようになります。
-*/
-/*
- * <MUser, String>
+
+<MUser, String>
  * < 扱うエンティティ・クラス , プライマリキーの型 >
 この２種類のタイプを総称型で指定することで、そのエンティティに特化したリポジトリとして扱われるようになるのです。*/
 public interface UserRepository extends JpaRepository<MUser, String> {
