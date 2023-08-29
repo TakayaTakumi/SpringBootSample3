@@ -25,6 +25,7 @@ public class UserServiceImpl2 implements UserService {
 	@Autowired
 	private UserRepository repository;
 
+	/*SecurityConfig.java */
 	@Autowired
 	private PasswordEncoder encoder;
 

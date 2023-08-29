@@ -24,10 +24,10 @@ import lombok.Data;
 
 //エンティティクラスです
 @Data
-@Entity
-@Table(name = "m_user")/*エンティティに対応付けるDBのテーブル名を指す。*/
+@Entity/*データベースのテーブルとマッピングするクラスに@Entityアノテーションを付けます。クラス名と同じテーブル名を生成してくれたりします。*/
+@Table(name = "m_user")/*エンティティに対応付けるDBのテーブル名を指す。 name属性に、マッピングしたいテーブル名を設定します。*/
 public class MUser {
-	@Id
+	@Id//主キーのフィールドに付けます。そうすることで、このフィールドが主キーであることを、JPAが認識してくれます。
 	private String userId;
 	private String password;
 	private String userName;
@@ -39,7 +39,7 @@ public class MUser {
 	@ManyToOne(optional =true)
 	@JoinColumn(insertable=false, updatable=false, name ="departmentId")
 	private Department department;/*Department.javaからDepartmentクラスを持ってきている*/
-	@Transient
+	@Transient// O/Rマッピングをしたくないフィールドには、@Transientアノテーションを付けます。
 	private List<Salary> salaryList;
 }
 /*なぜ追加していくのか別クラスのインターフェイスを作成することにより可読性をよくしている、その他のメソッドの記載があると見にくいため*/
