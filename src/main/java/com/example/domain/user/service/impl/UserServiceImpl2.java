@@ -19,9 +19,10 @@ import com.example.domain.user.service.UserService;
 import com.example.repository.UserRepository;
 
 @Service
-@Primary
+@Primary//同じインターフェースを実装したクラスがあるとどのクラスを実装したらいいのかわからなくなるためにつける。これをつけると優先してDIされる
 public class UserServiceImpl2 implements UserService {
 
+	//UserRepository.java
 	@Autowired
 	private UserRepository repository;
 
@@ -30,27 +31,27 @@ public class UserServiceImpl2 implements UserService {
 	private PasswordEncoder encoder;
 
 	/** ユーザー 登録 */
-	@Transactional
+	@Transactional//ORマッピングしたくないフィールドにつける
 	@Override
 	public void signup(MUser user) {
 
-		// 存在 チェック 
+		// 存在 チェック existsById:指定された ID を持つエンティティが存在するかどうかを返します
 		boolean exists = repository.existsById(user.getUserId());
 
 		if (exists) {
-			throw new DataAccessException("ユーザーが既に存在") {
+			throw new DataAccessException("ユーザーが既に存在") {//throw new～でインスタンスを生成している
 			};
 		}
 
 		user.setDepartmentId(1);
 		user.setRole("ROLE_GENERAL");
 
-		// パスワード 暗号化 
+		// パスワード 暗号化 SecurityConfig.javaに記載
 		String rawPassword = user.getPassword();
 		user.setPassword(encoder.encode(rawPassword));
 
 		// insert 
-		repository.save(user);
+		repository.save(user);//save()　キーが存在する場合は更新、存在しない場合は登録
 	}
 
 	/** ユーザー 取得 */
@@ -68,6 +69,7 @@ public class UserServiceImpl2 implements UserService {
 	/** ユーザー 取得( 1 件) */
 	@Override
 	public MUser getUserOne(String userId) {
+		//Optionalクラス（java.utilパッケージ）は、nullチェックを簡単化し、NullPointerExceptionの発生を未然に防ぐためのクラスです
 		Optional<MUser> option = repository.findById(userId);
 		MUser user = option.orElse(null);
 		return user;
@@ -96,6 +98,11 @@ public class UserServiceImpl2 implements UserService {
 	@Override
 	public MUser getLoginUser(String userId) {
 		
+		//Optionalクラス（java.utilパッケージ）は、nullチェックを簡単化し、NullPointerExceptionの発生を未然に防ぐためのクラスです
+		//Optional < MUser > option = repository.findById(userId);
+		
+		//Optionalに設定した値がnullでなければその値を、nullであればorElseで設定した値を取得します。
+		//MUser user = option. orElse( null);
 		return repository.findLoginUser(userId);
 
 	}
