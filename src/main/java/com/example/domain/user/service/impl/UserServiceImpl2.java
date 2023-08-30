@@ -58,12 +58,28 @@ public class UserServiceImpl2 implements UserService {
 	@Override
 	public List<MUser> getUsers(MUser user) {
 		
+		/*検索条件を変更するためにはＥxampleＭatcherを使用します
+		 * and条件、or条件、LIKE検索などの指定ができます。*/
 		//検索条件
-				ExampleMatcher matcher = ExampleMatcher.matching()//and条件
-						.withStringMatcher(StringMatcher.CONTAINING)//Like句
-						.withIgnoreCase();//大文字・小文字の両方
+				ExampleMatcher matcher = ExampleMatcher
+						/*デフォルトで、例から導出されたすべての述語に一致する、 
+						 * null 以外のすべてのプロパティを含む新しい ExampleMatcher を作成します。*/
+						.matching()//and条件
+						
+						/*defaultStringMatcher の指定された文字列一致を持つこの ExampleMatcher のコピーを返します。
+						 * このインスタンスは不変であり、このメソッド呼び出しの影響を受けません。
+				　　　　 *
+				         CONTAINING:パターンを含む文字列に一致
+				         withStringMatcherにあるStringMatcherを使っている*/
+						.withStringMatcher(StringMatcher.CONTAINING)//Like句 
+						
+						
+						/*デフォルトでは大文字と小文字の区別を無視して、この ExampleMatcher のコピーを返します。
+						 * このインスタンスは不変であり、このメソッド呼び出しの影響を受けません*/
+						.withIgnoreCase();//大文字・小文字の両方　
 				
-		return repository.findAll(Example.of(user,matcher));
+				
+		return repository.findAll(Example.of(user,matcher));//findAllメソッドにExampleを渡すことで、検索条件を変更できます。
 	}
 
 	/** ユーザー 取得( 1 件) */
@@ -91,7 +107,7 @@ public class UserServiceImpl2 implements UserService {
 	@Transactional
 	@Override
 	public void deleteUserOne(String userId) {
-		repository.deleteById(userId);
+		repository.deleteById(userId);//deleteById　は通常は見えないように記述しているp524
 	}
 
 	/** ログイン ユーザー 取得 */
