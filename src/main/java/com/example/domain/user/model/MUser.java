@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -44,7 +45,11 @@ public class MUser {
 	 * insertable = false, updatable = false　はinsert、updatに含めるかどうかを指定する　今回の場合は含めないということにしている*/
 	@JoinColumn(insertable = false, updatable = false, name = "departmentId")
 	private Department department;/*Department.javaからDepartmentクラスを持ってきている*/
+	
 	@Transient // O/Rマッピングをしたくないフィールドには、@Transientアノテーションを付けます。
+	
+	@OneToMany //MUserがList<Salary> salaryListを参照している
+	@JoinColumn(insertable = false,updatable = false,name = "userId")
 	private List<Salary> salaryList;
 }
 /*なぜ追加していくのか別クラスのインターフェイスを作成することにより可読性をよくしている、その他のメソッドの記載があると見にくいため*/

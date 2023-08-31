@@ -21,7 +21,7 @@ import lombok.Data;
 public class Salary {
 	//private String userId;
 	//private String yearMonth;
-	@EmbeddedId
+	@EmbeddedId//キーとして指定したフィールドにも同じく@EmbeddedIdをつける
 	private SalaryKey salaryKey;
 	private Integer salary;
 }
