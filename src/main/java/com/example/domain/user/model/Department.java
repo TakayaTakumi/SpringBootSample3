@@ -14,7 +14,11 @@ import lombok.Data;
 @Setter
 @RequiredArgsConstructor
 @EqualsAndHashCode*/
-/*@Entity テーブルのカラムを宣言する場所がエンティティ*/
+
+/*@Entity テーブルのカラムを宣言する場所がエンティティ
+ * @Entity/*データベースのテーブルとマッピングするクラスに@Entityアノテーションを付けます。クラス名と同じテーブル名を生成してくれたりします。*/
+
+/*エンティティに対応付けるDBのテーブル名を指す。 name属性に、マッピングしたいテーブル名を設定します。*/
 @Data
 @Entity
 @Table(name="m_department")/*エンティティに対応付けるDBのテーブル名を指す。*/
