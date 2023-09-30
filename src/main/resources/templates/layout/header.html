@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://wwwultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/layout}"><!--layout:decorate　どのレイアウトにこのhtmlを組み込むのかを決める-->
 
 <head>
 </head>
 
 <body>
-	<nav layout:fragment="header" class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-dark">
+	<nav layout:fragment="header" class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-dark"><!--layout.htmlのlayout:replaceと結びつきnav内のhtmlと結びつくlayout:fragmentタグ内にHTMLを追加する-->
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">SpringSamole</a>
+				<a class="navbar-brand" href="#">SpringSample</a>
 			</div>
 			<form method="post" th:action="@{/logout}">
 				<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト</button>

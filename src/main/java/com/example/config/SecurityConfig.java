@@ -13,19 +13,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@EnableWebSecurity
-@Configuration
+@EnableWebSecurity // Spring Securityを使うための設定
+@Configuration //WebSecurityのconfigureメソッドでは全体に対するセキュリティ設定を行います
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
+	/*PasswordEncoderというインターフェースがSpringで用意されています。これは、パスワードを暗号化するためのインターフェースです。*/
 	@Bean
 	public PasswordEncoder passwordEncoder() {
+		/*パスワードをハッシュ化するBCryptPasswordEncoderの使用が推奨されています。*/
 		return new BCryptPasswordEncoder();
 	}
-	/**セキュリティの対象外を設定*/
-	@Override
+
+	/*ここではSpringSecurityの制限を無視してほしい場所の指定をします
+	例： 静的ファイルなどを置いている場所
+	例えばロゴなどをサイトのヘッダーに置いている時など、これがないとロゴが出なくなってしまいます！
+	
+	@Override/**セキュリティの対象外を設定*/
 	public void configure(WebSecurity web) throws Exception {
 
 		//セキュリティを適用しない
@@ -35,40 +41,97 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/css/**")
 				.antMatchers("/js/**")
 				.antMatchers("/h2-console/**");
-
+		//,でつなげてもいい
 	}
 
 	/**セキュリティの各種設定*/
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+		//ここでは認証のための設定をしています
+		// アクセス権限に関する設定
 		//ログイン不要ページの設定
 		http
+				// /はアクセス制限をかけない
 				.authorizeRequests()
+				/*・URLごとの権限管理の設定オプションは「authorizeRequests()」から始まります。
+				  ・authorizeRequestsを宣言してからantMatchers()を使うことができます*/
 				.antMatchers("/login").permitAll()//直リンクOK
+				/*・権限管理対象を指定するオプションです。
+				　・URL、HTTPメソッドごとに管理が可能です。
+				　・"/"など指定されたURLは「permitAll()」オプションを使って全体観覧権限を与えました*/
 				.antMatchers("/user/signup").permitAll()//直リンクOK
 				.antMatchers("/user/signup/rest").permitAll()//直リンクOK
 				.antMatchers("/admin").hasAuthority("ROLE_ADMIN")//制限制御
 				.anyRequest().authenticated();//それ以外直リンクNG
+		/*設定された値以外のURLを示します。
+		今回は「authenticated()」を追加して残りURLに対してはすべて認証ユーザーのみ許可します。
+		認証ユーザーはつまりログインされているユーザーのことです。*/
+		
+		
+		/*antMatchers("/signin") ← ログイン画面
+		ここには全てのユーザーがアクセス可
+		antMatchers("/admin") ← 管理画面
+		ここには"ADMIN"権限がないとアクセスできない
+		Userテーブルのroleのカラムに入っている"ROLE_ADMIN＂で認証されます
+		.hasAuthority("ROLE_ADMIN")
+		指定のURLに対して認可を設定するためには、hasAuthorityなどのメソッドを使用します。このメソッドには権限を指定します。
+		その権限をユーザーが持っていれば、URLにアクセスできます。
+		.anyRequest().authenticated()
+		全てのURLリクエストは認証されているユーザーしかアクセスできないという記述です*/
 
 		//ログイン処理
 		http
 				.formLogin()
-				.loginProcessingUrl("/login")//ログイン処理のパス
-				.loginPage("/login")//ログインページの指定
+				.loginProcessingUrl("/login")//ログイン処理のパス th:action="@{/login}"
+				.loginPage("/login")//ログインページの指定 ます。 ログイン画面のコントローラーの@GetMapping("/login")の部分と、パスを一致させます。
 				.failureUrl("/login?error")//ログイン失敗時の遷移先
-				.usernameParameter("userId")//ログインページのユーザーID
-				.passwordParameter("password")//ログインページのパスワード
-				.defaultSuccessUrl("/user/list", true);//成功後の遷移先
+				.usernameParameter("userId")//ログインページのユーザーID userNameParameter("ユーザーIDのname属性")ログイン画面のユーザーID入力欄のname属性を設定します。
+				.passwordParameter("password")//ログインページのパスワード passwordParameter("パスワードのname属性")ログイン画面のパスワード入力欄のname属性を設定します。
+				.defaultSuccessUrl("/user/list", true);//成功後の遷移先 第2引数にtrueを指定すると、第1引数のパスに強制的に遷移します。
+		/*ここでは認証に関わるパラメータを指定してます
+		.loginProcessingUrl("/login")
+		ログインの処理をするURL
+		.loginPage("/login")
+		ログイン画面のURL
+		.failureUrl(""/login?error"")
+		ログインに失敗した時のURL
+		?errorとつけておくとthymeleafの方でエラーのメッセージを出すときに便利です
+		.usernameParameter("userId").passwordParameter("password")
+		ログイン画面のhtmlのinputのname属性を見に行っている
+		.defaultSuccessUrl("/user/list", true)
+		ログインが成功した時のURL
+		第2引数のboolean
+		true : ログイン画面した後必ずlistにとばされる
+		false : (認証されてなくて一度ログイン画面に飛ばされても)ログインしたら指定したURLに飛んでくれる*/
 
-		
+		/*Spring セキュリティがログアウト処理をやってくれるため、ログアウトのコントローラーは不要になります。
+		 * ログアウトコントローラのコードをコメントアウトしても、ログアウト処理が行われます。今までのログアウトコン
+		 * コントローラーは、あくまでも画面遷移のために使用していました。
+		 * */
 		//ログアウト処理
 		http
-		.logout()
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutUrl("/logout")
-		.logoutSuccessUrl("/login?logout");
-		
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutUrl("/logout")//ログアウトのURL
+				.logoutSuccessUrl("/login?logout");//ログアウト成功時のURL
+
+		/*logout補足
+		 * CSRFを追加するとHTTP POSTのみ反応する。
+		->http.logout().logoutUrl("/logout")
+		  とした場合、LogoutFilterは「/logout」のPOSTに対してのみ反応する
+		  これによって悪意のあるuserがuserを強制的にlogoutできなくなる。
+		logoutをGET methodで行いたい場合は、サンプルのように「logoutRequestMatcher」
+		を利用する。
+		 * logoutRequestMatcher
+		　・Springではログアウト処理はデフォルトでPOSTメソッド送る
+		　・GETで送る場合はlogoutRequestMatcherを使う
+		logoutUrl
+		　・POSTでログアウトする設定
+		logoutSuccessUrl
+		　・ログアウト成功時の遷移先
+		　・これでログアウトすると、ユーザーセッションが破棄されます */
+
+		/*CSRF（クロスサイトリクエストフォージェリ）はWebシステムを悪用したサイバー攻撃の一種です*/
 		//CSRF対策を無効を無効に設定(一時的)
 		//http.csrf().disable();
 
@@ -76,10 +139,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	/**認証の設定*/
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
 		PasswordEncoder encoder = passwordEncoder();
-		
+
+		/*インメモリ認証とは、仮のユーザーIDとパスワードを用意してログインできるようにする機能です。*/
 		//インメモリ認証
 		/*
 		auth
@@ -92,12 +156,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.password(encoder.encode("admin"))
 		.roles("ADMIN");
 		*/
-		
-		// ユーザー データ で 認証 
-		auth 
-		.userDetailsService(userDetailsService) 
-		.passwordEncoder(encoder);
 
-		
-	}
+		// ユーザー データ で 認証 
+		auth
+				.userDetailsService(userDetailsService)
+				.passwordEncoder(encoder);//パスワードの暗号化をしている
+
+	}/*ユーザーデータ認証をするためには、auth.userDetailsService()メソッドを使います。
+		このメソッドの引数に、自作したUserDetailsServiceを設定します。
+		また、パスワードの暗号化も必須のため、passwordEncoderメソッドを使用します。*/
 }
+
+/*セキュリティ設定クラスを用意するためには、以下の設定を行います。
+ * @EnableWebSecurityアノテーションをクラスに付ける。
+ * @Configurationアノテーションをクラスに付ける。
+ * WebSecurityConfigurerAdapterクラスを継承する。
+ * WebsecurityConfigurerAdapterのメソッドをオーバーライドすることで、セキュリティ設定を変更することができます。p393*/

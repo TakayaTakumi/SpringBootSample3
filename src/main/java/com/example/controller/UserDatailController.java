@@ -15,7 +15,10 @@ import com.example.form.UserDetailForm;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+/*SLF4J(Simple Logging Facade For Java)」はいろんなログ出力ライブラリを切り替えて使うためのインターフェース的なもの。
+ * だから実装的なライブラリと一緒に使うということになるのですね。*/
+@Slf4j//エラーについての内容
+
 @Controller
 @RequestMapping("/user")
 public class UserDatailController {
@@ -27,17 +30,21 @@ public class UserDatailController {
 	private ModelMapper modelMapper;
 	
 	
-	/**ユーザー詳細画面を表示*/
-	@GetMapping("/detail/{userId:.+}")
+	/*list.htmlの詳細ボタンを押すとgetMappingが発動する　detail.htmlが映る
+	 * ユーザー詳細画面を表示*/
+	@GetMapping("/detail/{userId:.+}")/*@PathVariable("userId")には{userId:.+}の変数名を入れる*/
 	public String getUser(UserDetailForm form,Model model,@PathVariable("userId")String userId) {
+		
 		
 		//ユーザーを1件取得
 		MUser user = userService.getUserOne(userId);
-		user.setPassword(null);
-		
+		user.setPassword(null);/*passwordにnullが入っているのはセキュリティー上の保護のため表示されたらまずいから*/
+		/*modelMapper.mapメソッドを使うことによりフィールドの内容を簡単にコピーできる
+		 * 画面に変更があっても、サービスの修正が不要になる。他の画面からもサービスを再利用できるようになる。*/
 		//MUserをformに変換
 		form = modelMapper.map(user, UserDetailForm.class);
-		form.setSalaryList(user.getSalaryList());
+		form.setSalaryList(user.getSalaryList());//MUser.java(MUser userと定義している)→Salary.javaから給料情報をgetしている
+												 //UserDetailForm.javaのsetSalaryListにsetしている
 		
 		//Modelに登録
 		model.addAttribute("userDetailForm", form);
@@ -46,8 +53,10 @@ public class UserDatailController {
 		return"user/detail";
 	}
 	
+	/*params属性にはdetail.htmlのbuttonタグのname属性と結びつけることによって
+	 * コントローラーで受け取るメソッドを変更することができる*/
 	/**ユーザー更新処理*/
-	@PostMapping(value ="/detail",params="update")
+	@PostMapping(value ="/detail",params="update")//value属性にはurlを設定する
 	public String updateUser(UserDetailForm form, Model model) {
 		
 		
@@ -56,6 +65,8 @@ public class UserDatailController {
 		userService.updateUserOne(form.getUserId(),
 				form.getPassword(),
 				form.getUserName());
+		
+		/*エラー内容の詳細を確認するためにはスタックトレースをlombokのlogメソッドにExeptionクラスを渡すとスタックトレースを出力してくれる */
 		}catch(Exception e) {
 			log.error("ユーザー更新でエラー",e);
 		}
@@ -64,8 +75,10 @@ public class UserDatailController {
 		return "redirect:/user/list";
 	}
 	
+	/*params属性にはdetail.htmlのbuttonタグのname属性と結びつけることによって
+	 * コントローラーで受け取るメソッドを変更することができる*/
 	/**ユーザー削除処理*/
-	@PostMapping(value = "/detail",params ="delete")
+	@PostMapping(value = "/detail",params ="delete")//value属性にはurlを設定する
 	public String deleteUser(UserDetailForm form, Model model) {
 		
 		//ユーザーを削除

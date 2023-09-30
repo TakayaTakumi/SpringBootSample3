@@ -1,35 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?><!-- xmlのバージョンとエンコーディング宣言をしている --> 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- 1対1結合は、結合で使用される両方のアイテムが主キーになる2つのフォルダ間の結合です。
+そのため、1つのフォルダの1行のみが、別のフォルダの1行のみと結合されます(あるいはどの行とも結合されません)。 -->
 
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.UserMapper">
-
-
+	<!-- resultMap – データベースから取得した結果セットをJava オブジェクトにマッピングするための情報を記述する、最も複雑で強力な要素です。 -->
 	<!-- マッピング定義（ユーザー） -->
 	<resultMap type="com.example.domain.user.model.MUser"
-		id="user">
-		<id column="user_id" property="userId" />
-		<result column="password" property="password" />
+		id="user"><!-- MUser.javaと結びついている -->
+		<!-- type属性にはパッケージを含めたクラス名を入れる idには任意の値を入れる　UserMapper.xmlのユーザー一件検索 select 
+			id="findOne" resultMap="user" のuserを設定する -->
+
+		<id column="user_id" property="userId" /><!-- columnにはselect結果のカラム名を設定する 
+			data.sqlのINSERT INTO m_userの値 -->
+		<result column="password" property="password" /><!-- property属性にはjavaのフィールドを設定する 
+			MUser.javaのpublic class MUser の値 -->
 		<result column="user_name" property="userName" />
 		<result column="birthday" property="birthday" />
 		<result column="age" property="age" />
 		<result column="gender" property="gender" />
 		<result column="department_Id" property="departmentId" />
 		<result column="role" property="role" />
-		<association property="department" resultMap="department" />
+		<association property="department" resultMap="department" /><!-- associationタグはマッピング定義内に別のマッピング定義を挿入できる -->
 		<collection property="salaryList" resultMap="salary"
-			columnPrefix="salary_" />
+			columnPrefix="salary_" /><!-- collectionタグを追加することでマッピング定義内に別のマッピングを定義できる1対多ではcollectionタグを使用-->
+			<!-- 複数のテーブルを結合する場合、SELECT結果のカラム名が重複する可能性あり。カラム名の重複を避けるためにSELECT結果に別名を付けることがあり、
+			別名を付けるとマッピング定義のカラム名と一致しなくなってしまいます。その問題を解決するために使用するのがcolumnPrefix属性です。 -->
 	</resultMap>
 
-	<!-- マッピング定義(部署) -->
+<!-- 1対1結合は、結合で使用される両方のアイテムが主キーになる2つのフォルダ間の結合です。
+そのため、1つのフォルダの1行のみが、別のフォルダの1行のみと結合されます(あるいはどの行とも結合されません)。 -->
+
+<!-- マッピング定義(部署) --><!-- これをassociationで挿入している -->
 	<resultMap type="com.example.domain.user.model.Department"
 		id="department">
 		<id column="department_id" property="departmentId" />
 		<result column="department_name" property="departmentName" />
 	</resultMap>
-
+	
+<!--1対多結合では、マスター・フォルダの1行がディテール・フォルダの複数行に結合されます。-->
 	<!-- マッピング定義(給料) -->
 	<resultMap type="com.example.domain.user.model.Salary"
 		id="salary">
@@ -40,7 +52,8 @@
 	</resultMap>
 
 	<!-- ユーザー1件登録 -->
-	<insert id="insertOne">
+	<insert id="insertOne"><!-- UserMapper.javaのユーザー登録のinsertOneとinsert id="insertOne"を一致させる 
+			このタグの中にSQLのINSERT INTO文が記述され、Javaメソッドから呼び出されるときに実行されます。 -->
 		insert into m_user(
 		user_id
 		,password
@@ -52,8 +65,9 @@
 		,role
 		)
 		values(
-		#{userId}
-		,#{password}
+		#{userId}<!-- ・マッパーインターフェースから受け取る引数をSQL中で使用する場合、#{メソッド引数名}のように記載します。 -->
+		,#{password}<!-- メソッド引数をMUserクラスにしている -->
+		>
 		,#{userName}
 		,#{birthday}
 		,#{age}
@@ -63,10 +77,11 @@
 		)
 	</insert>
 
-
+	<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、 
+		idのfindManyを使うことで対応するクエリを参照できる -->
 	<!-- ユーザー複数件取得 -->
 	<select id="findMany" resultType="MUser">
-
+		<!-- selectタグの中で*を使って、m_userテーブルからすべての列を選択します。 -->
 		select
 
 		*
@@ -74,10 +89,16 @@
 		from
 
 		m_user
+		<!-- whereタグ内のifが1つでもtrueになるとwhere句を追加する。つまり、where句が必ず付くかどうか分からない場合に、このタグを使います。
+		WHERE句は、データベースからデータを抽出する際に、特定の条件に一致するレコードのみを返すための句です。-->
 		<where>
+<!-- ifはif文と同じ testに条件式を書く -->
+<!-- userId != nullでない場合user_id列がuserIdを部分文字列として含む行を検索します。 LIKE演算子を使って部分一致の検索を行います -->
 
-			<if test="userId != null">user_id like '%' || #{userId} ||'%'</if>
-
+			<if test="userId != null">user_id like '%' || #{userId} || '%'</if>
+			<!-- ||は文字列を結合 %はワイルドカード（あらゆる文字列を代替する記号） 例　WHERE name LIKE '%son%'だった場合（例："Johnson", 
+				"Jackson", "Mason"など）。 -->
+			>
 			<if test="userName != null">and user_name like '%' || #{userName} || '%'</if>
 
 		</where>
@@ -85,7 +106,20 @@
 
 	<!-- ユーザー一件検索 -->
 	<select id="findOne" resultMap="user">
-
+<!--	最初の形　下記
+		select
+		　＊
+		from
+		m_user
+		left join(結合の意味がある) m_department on m_user.department_id 
+		(この結合は、m_userテーブルのdepartment_idカラムとm_departmentテーブルのdepartment_idカラムを使用して行われます。)
+		= m_department.department_id
+		where
+		m_user.user_id=#{userId}
+		(WHERE句を使用して、m_userテーブルのuser_idカラムが指定されたuserIdパラメータと一致するレコードをフィルタリングします。)
+		
+		on m_user.user_id=t_salary.user_id(給料テーブル)　も上記と同じ-->
+		
 		select
 
 		m_user.user_id,
@@ -96,13 +130,12 @@
 		m_user.gender,
 		m_department.department_id,
 		m_department.department_name,
-		t_salary.user_id as salary_user_id,
-		t_salary.year_month as salary_year_month,
-		t_salary.salary as
-		salary_salary
+		t_salary.user_id as salary_user_id,      <!--salary_user_id      columnPrefix="salary_"とcolumn="user_idが結びついている -->>
+		t_salary.year_month as salary_year_month,<!--salary_year_month           //            とcolumn="year_month"が結びついている  -->>
+		t_salary.salary as salary_salary         <!--salary_salary　　     　　　//　　　　　　とcolumn="salary"が結びついている  -->
 		from
-		m_user
-		left join m_department
+		m_user                                   <!-- as句とは、カラムやテーブルに別名をつけられる句です。 -->
+		left join m_department					 <!-- SELECT （カラム名 AS 別名） FROM テーブル名; -->>
 		on m_user.department_id =
 		m_department.department_id
 		left join t_salary
@@ -145,6 +178,9 @@
 		user_id = #{userId}
 	</delete>
 
+
+<!-- select文を書く場合selectタグを使用するresultType属性には戻り値をそしてマッピングする今回の場合はMUser型のオブジェクトに変換される、 
+		idのfindLoginUserを使うことで対応するクエリを参照できる -->
 	<!-- ログインユーザー情報取得 -->
 	<select id="findLoginUser" resultType="MUser">
 		select
@@ -154,7 +190,7 @@
 		from
 
 		m_user
-		
+
 		where
 
 		user_id = #{userId}

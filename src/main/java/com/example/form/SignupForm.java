@@ -17,12 +17,15 @@ import lombok.Data;
 @Data
 public class SignupForm {
 	
-	
+/*@NotBlank 文字列がnull、空文字、空白、スペースのみでないことをチェックする　groups = ValidGroup1.classで初めにエラーがあるか
+ *@Email 文字列がメールアドレス形式かどうかチェックする　　　　　　　　　　　 次にgroups = ValidGroup2.classでエラーがあるか確認する
+ *																			　両方にエラーがあった場合2のほうでエラー表記をする*/	
 @NotBlank(groups = ValidGroup1.class)
 @Email(groups = ValidGroup2.class)
 private String userId;
 
-
+/*@Length 文字列の長さが指定した範囲内であるかをチェックする
+ *@Pattern 指定した正規表現に一致する*/
 @NotBlank(groups = ValidGroup1.class)
 @Length(min=4,max=100,groups = ValidGroup2.class)
 @Pattern(regexp ="^[a-zA-Z0-9]+$",groups = ValidGroup2.class)
@@ -32,12 +35,16 @@ private String password;
 @NotBlank(groups = ValidGroup1.class)
 private String userName;
 
-
+/*日付情報をyyyy/mm/ddなどの指定したフォーマットに変換して表示するための補助クラスです。
+ * LocalDateTimeクラスで日付時刻情報を取得し、DateTimeFormatterを使って画面に日付情報を表示する方式が一般的です。
+ *@NotNull null出ないことをチェックする*/
 @DateTimeFormat(pattern = "yyyy/MM/dd")
 @NotNull(groups = ValidGroup1.class)
 private Date birthday;
 
-
+/*@Min 規定した値以上であるかチェックする
+ *@Max 規定した値以下であるかチェックする
+ *value　@Max、Min属性で検証を行う際の最大許容値を指定するmin=20は20以上であることが期待される max=100の場合は100以下であることが期待される*/
 @Min(value = 20,groups = ValidGroup2.class)
 @Max(value = 100,groups = ValidGroup2.class)
 private Integer age;

@@ -6,13 +6,16 @@
 	<title>Error</title>
 </head>
 
-<body>
-	<h1 th:text="${status} + ' ' + ${error}"></h1>
-	<p th:text="${message}"></p>
+<body><!--新規登録画面で登録されている同じ値を使用して登録した場合に移行する-->
+	<h1 th:text="${status} + ' ' + ${error}"></h1><!--${status} + ' ' + ${error} statusにはHTTPエラーコードが格納　errorにはエラー概要が表示-->
+	<p th:text="${message}"></p><!--エラーメッセージが表示される-->
 	<p>ログイン画面に戻ってください</p>
 	<form method="post" th:action="@{/logout}">
+		<!--ログイン画面に戻るのボタンを押したらlogin画面に移行-->
 		<button class="btn btn-link" type="submit">ログイン画面に戻る</button>
 	</form>
 </body>
 
 </html>
+<!--会員登録画面でエラー画面に移行、ログイン画面に戻るボタンを押すとpostの/logoutが実行され
+(logout.controller.javaに移行)に移行しlogin画面にリダイレクト-->

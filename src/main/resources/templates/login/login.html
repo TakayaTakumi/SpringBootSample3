@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
 	</meta>
@@ -11,29 +12,36 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<title>ログイン</title>
-	</head>
+</head>
 
-	<body class="bg-light">
-		<div class="text-center">
-			<form method="post" th:action="@{/login}" class="form-login">
-				<h2>ログイン</h2>
-				<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
-				 th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
-				 class="text-danger">ログインエラーメッセージ</p>
-				<!--ユーザーID-->
-				<div class="form-group">
-					<label for="userId" class="sr-only">userId</label>
-					<input type="text" class="form-control" placeholder="ユーザーID" name="userId"/>
-				</div>
-				<!--パスワード-->
-				<div class="form-group">
-					<label for="password" class="sr-only">password</label>
-					<input type="text" class="form-control" placeholder="パスワード" name="password"/>
-				</div>
-				<input type="submit" value="ログイン" class="btn btn-primary" />
-			</form>
-			<a th:href="@{/user/signup}">新規登録はこちら</a>
-		</div>
-	</body>
+<body class="bg-light">
+	<div class="text-center">
+		<form method="post" th:action="@{/login}" class="form-login">
+			<h2>ログイン</h2><!--ログインエラーメッセージの表示　ログインエラーメッセージを表示するためには、th:if属性を使う
+<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+ th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger"></p>
+上記では、セッションにセキュリティのエラーがあれば、エラーメッセージを表示する、という内容-->
+			<!--エラーメッセージを表示するためには、サンプルコードと同じコードを書きます。-->
+			<!--ログインエラーがあったときだけ表示する条件次にメッセージ定義の内容を表示するアクセサ。-->
+			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+				th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">ログインエラーメッセージ</p>
+				<!--SPRING_SECURITY_LAST_EXCEPTIONはmessages.propertiesのAbstractUserDetailsAuthenticationProvide～が結びついて表示される-->
+				
+				
+			<!--ユーザーID-->
+			<div class="form-group">
+				<label for="userId" class="sr-only">userId</label>
+				<input type="text" class="form-control" placeholder="ユーザーID" name="userId" />
+			</div>
+			<!--パスワード-->
+			<div class="form-group">
+				<label for="password" class="sr-only">password</label>
+				<input type="text" class="form-control" placeholder="パスワード" name="password" />
+			</div>
+			<input type="submit" value="ログイン" class="btn btn-primary" />
+		</form>
+		<a th:href="@{/user/signup}">新規登録はこちら</a>
+	</div>
+</body>
 
 </html>

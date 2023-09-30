@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!--404エラー画面に対応している　URL先のページが間違っているか削除されている場合に表示される-->
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" />
 		<title>404Error</title>
 	</head>
 	<body>
-		<h1 th:text="${status} + ' ' + ${error}"></h1>
+		<h1 th:text="${status} + ' ' + ${error}"></h1><!--${status} + ' ' + ${error} statusにはHTTPエラーコードが格納　errorにはエラー概要が表示-->
 		<p>これは、404エラーの専用ページです</p>
 		<form method="post" th:action="@{/logout}">
-			<button class="btn btn-like" type="submit">ログイン画面に戻る</button>
+			<button class="btn btn-like" type="submit">ログイン画面に戻る</button><!--これはLogoutControler.javaの"redirect:/login"と結ぶついている-->
 		</form>
 	</body>
 </html>
+<!--error.htmlと同じ-->

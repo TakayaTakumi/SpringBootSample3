@@ -8,6 +8,10 @@ import com.example.domain.user.model.Salary;
 
 import lombok.Data;
 
+/*表示用*/
+/*UserDetailForm　訳　ユーザー詳細フォーム
+* ユーザー詳細画面のフォームクラス MUserとは違う
+* MUserから	＠Dataを使って持ってきている*/
 @Data
 public class UserDetailForm {
 
@@ -17,6 +21,7 @@ public class UserDetailForm {
 	private Date birthday;
 	private Integer age;
 	private Integer gender;
-	private Department department;
+	private Department department;/*Department.javaから持ってきている　ユーザ詳細画面に部署情報追加！*/
 	private List<Salary> salaryList;
-}
+	/*Salary.javaから持ってきている(複数だからLIstを使う)詳細画面でも給料を表示させるため　UserDatailControllerから格納している*/
+	}

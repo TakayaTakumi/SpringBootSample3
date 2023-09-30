@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nzthymeleaf/layout"
 	layout:decorate="~{layout/layout}"　xmlns:sec="http://www.thyemeaf.org/extras/spring-security">
-
+<!--。layout:decorate属性は、どのレイアウトに、このHTMLを組み込むかを指定します。
+　　　sec:authorize属性を使用するためにxmlns:sec="http://www.thyemeaf.org/extras/spring-security"が必要 -->
 <head>
 </head>
 
 <body>
 	<div layout:fragment="menu" class="bg-light">
 		<ul class="nav nav-pills nav-stacked">
-			<li role="presentation">
+			<li role="presentation"><!--「LI」とは「list item」の略で、リストの項目を表示するために使用するタグです。
+				ole="presentation"　視覚表現を行う要素に対して指定する属性です　解体新書p450に詳しく書いている-->
 				<a class="nav-link" th:href="@{/user/list}">ユーザー一覧</a>
 			</li>
-			<li role="presentation" sec:authorize="hasRole('ADMIN')">
-				<a class="nav-link" th:href="@{'/admin'}">アドミン専用</a>
-			</li>
+			<li role="presentation" sec:authorize="hasRole('ADMIN')"><!--sec:authorize属性を使うと、権限を持っているユーザーのみhtmlタグが表示されるようになります-->
+				<a class="nav-link" th:href="@{'/admin'}">アドミン専用</a><!--アドミン専用の表示にnav-linkと言う/user/listのlinkをつけている-->
+			</li><!--sec:authorize="hasRole('ADMIN')"の上記権限がないとアドミン専用の文字が表示されない-->
 		</ul>
 	</div>
 </body>

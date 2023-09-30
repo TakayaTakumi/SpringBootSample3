@@ -6,17 +6,29 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.domain.user.model.MUser;
+/*JPAでリポジトリーを生成する場合、JpaRepositoryを継承します。JpaRepositoryのジェネリックスには、以下の型を指定します。*/
+/*extends JpaRepository
+クラスは、このように「JpaRepository」というインターフェイスを継承しています。
+これは非常に重要です。これを継承することで、自動的に必要なメソッドなどが組み込まれるようになります。
 
+<MUser, String>
+ * < 扱うエンティティ・クラス , プライマリキーの型 >
+この２種類のタイプを総称型で指定することで、そのエンティティに特化したリポジトリとして扱われるようになるのです。*/
 public interface UserRepository extends JpaRepository<MUser, String> {
-
 	/** ログイン ユーザー 検索 */
-	@Query("select user"
+	@Query//任意のSQLを実行できるメソッドを用意できる　代わりにjavaクラス名やフィールド名を使います　
+	      //メソッドの引数は「:変数」でクエリに埋め込むことができる
+	("select user"
 			+ " from MUser user"
 			+ " where userId = :userId")
+	/*「@param 引数名 説明」と記述することで、Javadocによって出力されたメソッドの仕様に、
+	 * 「パラメータ: 引数名 - 説明」という記述が出力される。
+	　複数のパラメーターを使用する場合、メソッドの引数に@Paramアノテーションを付けます。 
+	このアノテーションの値にはパラメーター名を指定します*/
 	public MUser findLoginUser(@Param("userId") String userId);
 
 	/** ユーザー 更新 */
-	@Modifying
+	@Modifying//@Query　を使ってinsert・update・delete文とDDLを実行する実行する場合@Modifyingをつけなければいけない
 	@Query("update MUser"
 			+ " set"
 			+ " password = :password"
@@ -28,3 +40,4 @@ public interface UserRepository extends JpaRepository<MUser, String> {
 			@Param("password") String password,
 			@Param("userName") String userName);
 }
+

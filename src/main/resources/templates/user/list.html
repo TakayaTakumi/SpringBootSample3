@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div layout:fragment="content">
+	<div layout:fragment="content"> <!-- layout:fragment="content"を使うことでこの部分は他のページの"content"フラグメントによって置き換えられる -->
 		<div class="header border-bottom">
 			<h1 class="h2">ユーザー一覧画面</h1>
 		</div>
@@ -22,6 +22,7 @@
 		<div class="mb-4">
 			<form id="user-search-form" method="post" th:action="@{/user/list}" class="form-inline"
 				th:object="${userListForm}">
+				<!--form タグでth:action属性を使っているとこの属性を使っていると、CSRFトー クンのパラメーターが自動で追加されます。-->
 				<div class="form-group">
 					<label for="userId" class="mr-2">ユーザーID</label>
 					<input type="text" class="form-control" th:field="*{userId}" />
@@ -48,14 +49,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="item:${userList}">
+					<tr th:each="item:${userList}"><!--UserListController.javaでModelに登録したUserlistを引きだし
+													下記${item.～}に繰り返し処理で登録している-->
 						<td th:text="${item.userId}"></td>
 						<td th:text="${item.userName}"></td>
 						<td th:text="${#dates.format(item.birthday,'YYYY/MM/dd')}"></td>
 						<td th:text="${item.age}"></td>
-						<td th:text="${item.gender==1}?'男性':'女性'"></td>
+						<td th:text="${item.gender==1}?'男性':'女性'"></td><!--男性が1でそれ以外では女性を表示している-->
 						<td>
-							<a class="btn btn-primary" th:href="@{'/user/detail/'+${item.userId}}">詳細</a>
+							<a class="btn btn-primary" th:href="@{'/user/detail/'+${item.userId}}">詳細</a><!--@がつくと中カッコ{}内をリンク
+							のURLを動的に設定している　詳細ボタンを押すと結果として詳細画面に移動する-->
 						</td>
 					</tr>
 				</tbody>

@@ -1,21 +1,23 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!--文書型の定義を宣言する事によりブラウザが文書を[標準モード]でひょうじするため、
+				書かなかった場合、一部のブラウザーでhtmlやcssが糸氏とように表示されない-->
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"><!--thymeleafを使う宣言　html要素であり、html文書でおいてルートとなる要素でありルート要素である-->
 
-<head>
-	<meta charset="UTF-8">
+<head><!--文章のヘッダ部分を指定　htmlのファイルの情報を宣言するもの-->
+	<meta charset="UTF-8"><!--メタ情報を記載している UTF-8を指定しないとhtml側の文字と画面上で表示する文字が異なり文字化けが起きてしまう-->
 	</meta>
-	
-	<title>ResonseSample</title>
+
+	<title>ResonseSample</title><!--タブ上に表示される物のほかに題名バーに表示される文章を定義している-->
 </head>
 
-<body>
-	
-	<h1>HelloResonse</h1>
-	
-	<!--受け取った文字を表示する-->
-	
-	<p th:text="${sample}"></p>
+<body><!--bodyタグ内で囲われている部分はブラウザ上で表示される内容を記載する-->
+
+	<h1>HelloResonse</h1><!--Hとはhedingを表し見出しを表している-->
+
+	<!--受け取った文字を表示する　th:属性をhtmlにつけることによりth属性の後に${キー名}と入力すことでmodelクラスに登録された値を取得できる-->
+
+	<p th:text="${sample}"></p><!--model.addAttribute(キー名,値)で表示されているキー名にあたる部分がここに来る
+								<sample>というキー名が呼ばれるとstrに格納されている文言が表示される pとはparagraphであり一行開けて表示される-->
 </body>
 
 </html>
